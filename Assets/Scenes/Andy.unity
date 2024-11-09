@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runSpeed: 10
-  jumpSpeed: 20
+  jumpSpeed: 19
   physicsComplete: 0
 --- !u!50 &1589337419
 Rigidbody2D:
