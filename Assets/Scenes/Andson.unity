@@ -268,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 1797442785}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.79, y: -3.73, z: 0}
+  m_LocalPosition: {x: -5.68, y: -1.4, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -288,8 +288,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAwake: 0
   player: {fileID: 0}
+  maxSpeed: 2
+  initalSpeed: 0.7
+  acceleration: 0.5
   speed: 1
   awakeDistance: 30
+  rigidbody: {fileID: 0}
+  direction: {x: 0, y: 0}
+  isChasingPlayer: 0
+  isBouncing: 0
+  bouceXdistance: 2
+  bouceYdistance: 1
+  left_or_right: 0
+  target: {x: 0, y: 0, z: 0}
+  firstBoucefinished: 0
+  radius: 1
+  dir: 1
 --- !u!50 &1797442789
 Rigidbody2D:
   serializedVersion: 4
