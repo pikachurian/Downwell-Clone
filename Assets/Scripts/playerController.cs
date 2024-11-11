@@ -36,6 +36,8 @@ public class playerController : MonoBehaviour
     {
         isGround = myFeet.IsTouchingLayers(LayerMask.GetMask("Ground")) ||
                    myFeet.IsTouchingLayers(LayerMask.GetMask("Platform"));
+
+        myAnim.SetFloat("Vertical Speed", myRigidbody.velocity.y);
     }
 
     void Flip()
@@ -61,7 +63,7 @@ public class playerController : MonoBehaviour
         Vector2 playerVel = new Vector2(moveDir * runSpeed, myRigidbody.velocity.y);
         myRigidbody.velocity = playerVel;
         bool playerHasXAxisSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
-        //myAnim.SetBool("Running", playerHasXAxisSpeed);
+        myAnim.SetFloat("Horizontal Speed", Mathf.Abs(myRigidbody.velocity.x));
     }
 
     void Jump()
