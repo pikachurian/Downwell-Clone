@@ -8,6 +8,7 @@ public class playerController : MonoBehaviour
 
     public float runSpeed;
     public float jumpSpeed;
+    public float jumpDampenPercent = 0.25f;
     public bool physicsComplete = false;
 
     private Animator myAnim;
@@ -90,6 +91,13 @@ public class playerController : MonoBehaviour
                 Vector2 jumpVel = new Vector2(0.0f, jumpSpeed);
                 myRigidbody.velocity = Vector2.up * jumpVel;
             }
+        }
+
+        //When the player let's go of the jump button, reduce their Y velocity.
+        //This creates a variable/charge jump.
+        if (Input.GetButtonUp("Jump") || Input.GetKeyUp("space") || Input.GetKeyUp("up"))
+        {
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y * jumpDampenPercent);
         }
     }
 
