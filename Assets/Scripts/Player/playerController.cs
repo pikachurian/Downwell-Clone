@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class playerController : MonoBehaviour
@@ -13,6 +14,15 @@ public class playerController : MonoBehaviour
     private Rigidbody2D myRigidbody;
     private BoxCollider2D myFeet;
     private bool isGround;
+
+    //Shooting
+    public GameObject bulletPrefab;
+    public float shootForce = 1f;
+    public bool canShoot = false;
+    public float shootRateTime = 0.5f;
+    private float shootRateTick = 0f;
+    public Vector3 bulletSpawnOffset = Vector3.zero;
+    //public KeyCode shootInput;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +39,7 @@ public class playerController : MonoBehaviour
         Running();
         Jump();
         CheckGrounded();
+        Shoot();
         SwitchAnimation();
     }
 
@@ -36,6 +47,9 @@ public class playerController : MonoBehaviour
     {
         isGround = myFeet.IsTouchingLayers(LayerMask.GetMask("Ground")) ||
                    myFeet.IsTouchingLayers(LayerMask.GetMask("Platform"));
+
+        if (isGround)
+            canShoot = false;
 
         myAnim.SetFloat("Vertical Speed", myRigidbody.velocity.y);
     }
@@ -78,6 +92,43 @@ public class playerController : MonoBehaviour
             }
         }
     }
+
+    void Shoot()
+    {
+        if (Input.GetButtonUp("Jump") || Input.GetKeyUp("space") || Input.GetKeyUp("up"))
+        {
+            if (!isGround && canShoot == false)
+            {
+                canShoot = true;
+                shootRateTick = 0f;
+                print("You can shoot, again!");
+            }
+        }
+        
+        if (Input.GetButton("Jump") || Input.GetKey("space") || Input.GetKey("up"))
+        {
+            if (!isGround && canShoot)
+            {
+                if (shootRateTick <= 0f)
+                {
+                    FireBullet();
+                    shootRateTick = shootRateTime;
+                }
+                else shootRateTick -= Time.deltaTime;
+            }
+        }
+    }
+
+    void FireBullet()
+    {
+        //Spawn bullet
+        GameObject bulletInst = Instantiate(bulletPrefab);
+        bulletInst.transform.position = transform.position + bulletSpawnOffset;
+
+        //Apply bullet "bounce"
+        myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, shootForce);
+    }
+
     void SwitchAnimation()
     {
         if (myRigidbody.velocity.y < 0.0f)
@@ -90,5 +141,13 @@ public class playerController : MonoBehaviour
             //myAnim.SetBool("Fall", false);
             //myAnim.SetBool("Idle", true);
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        //Draw bullet spawn
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position + bulletSpawnOffset, 0.5f);
+
     }
 }
