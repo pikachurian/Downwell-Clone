@@ -23,11 +23,16 @@ public class playerController : MonoBehaviour
     public float shootRateTime = 0.5f;
     private float shootRateTick = 0f;
     public Vector3 bulletSpawnOffset = Vector3.zero;
+    public int ammo_max = 8;
+    private int ammo_num;
+    public Ammo_Bar ammo_Bar;
+
     //public KeyCode shootInput;
 
     // Start is called before the first frame update
     void Start()
     {
+        SetAmmo(ammo_max);
         myAnim = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         myFeet = GetComponent<BoxCollider2D>();
@@ -50,7 +55,10 @@ public class playerController : MonoBehaviour
                    myFeet.IsTouchingLayers(LayerMask.GetMask("Platform"));
 
         if (isGround)
+        {
             canShoot = false;
+            SetAmmo(ammo_max);
+        }
 
         myAnim.SetFloat("Vertical Speed", myRigidbody.velocity.y);
     }
@@ -130,11 +138,20 @@ public class playerController : MonoBehaviour
     void FireBullet()
     {
         //Spawn bullet
-        GameObject bulletInst = Instantiate(bulletPrefab);
-        bulletInst.transform.position = transform.position + bulletSpawnOffset;
+        if (ammo_num >= 1)
+        {
+            GameObject bulletInst = Instantiate(bulletPrefab);
+            bulletInst.transform.position = transform.position + bulletSpawnOffset;
+            SetAmmo(ammo_num -1);
+            //Apply bullet "bounce"
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, shootForce);
+        }
+    }
 
-        //Apply bullet "bounce"
-        myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, shootForce);
+    void SetAmmo( int amount )
+    {
+        ammo_num = amount;
+        ammo_Bar.SetBulletGUI(ammo_num);
     }
 
     void SwitchAnimation()
