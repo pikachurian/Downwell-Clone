@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class playerController : MonoBehaviour
@@ -26,6 +27,10 @@ public class playerController : MonoBehaviour
     public int ammo_max = 8;
     private int ammo_num;
     public Ammo_Bar ammo_Bar;
+
+    //Stomping
+    public float stompBoost = 5f;
+
 
     //public KeyCode shootInput;
 
@@ -53,6 +58,16 @@ public class playerController : MonoBehaviour
     {
         isGround = myFeet.IsTouchingLayers(LayerMask.GetMask("Ground")) ||
                    myFeet.IsTouchingLayers(LayerMask.GetMask("Platform"));
+
+        //Check enemy;
+        /*if (myFeet.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+        {
+            myFeet.col
+
+            canShoot = true;
+            SetAmmo(ammo_max);
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, stompBoost);
+        }*/
 
         if (isGround)
         {
@@ -165,6 +180,30 @@ public class playerController : MonoBehaviour
         {
             //myAnim.SetBool("Fall", false);
             //myAnim.SetBool("Idle", true);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Stomping
+        //print(collision.gameObject.layer);
+        if (collision.gameObject.layer == 9)//If on enemy layer
+        {
+            //print("Player stomped on enemy.");
+            if (collision.transform.position.y < transform.position.y)
+            {
+                print(collision.gameObject.tag);
+                switch(collision.gameObject.tag)
+                {
+                    case "Turtle":
+                        collision.gameObject.GetComponent<Turtle>().TakeStompDamage(1);
+                        break;
+                }
+
+                canShoot = true;
+                SetAmmo(ammo_max);
+                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, stompBoost);
+            }
         }
     }
 
