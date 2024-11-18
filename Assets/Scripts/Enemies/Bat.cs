@@ -14,6 +14,8 @@ public class Bat : MonoBehaviour
     public float speed;
     private GameObject player;
     private Vector2 direction;
+    public Collider2D bat;
+    public Collider2D playerCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,8 @@ public class Bat : MonoBehaviour
         {
             currentState = State.chase;
         }
+
+        //Physics2D.IgnoreCollision(bat, playerCollider, false);
     }
 
     private void chase()
@@ -57,5 +61,7 @@ public class Bat : MonoBehaviour
         {
             currentState = State.death;
         }
+
+        //Physics2D.IgnoreCollision(bat, playerCollider, false);
     }
 }
