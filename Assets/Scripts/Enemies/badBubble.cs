@@ -187,6 +187,21 @@ public class badBubble : MonoBehaviour
            
 
         }
+
+
+        if (collision.gameObject.CompareTag("bullet"))
+        {
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (collision.transform.position.y > this.transform.position.y)
+            {
+                Destroy(gameObject);
+            }
+        }
+
     }
 
 
