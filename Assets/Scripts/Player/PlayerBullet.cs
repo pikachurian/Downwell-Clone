@@ -34,6 +34,13 @@ public class PlayerBullet : MonoBehaviour
                 print("Bullet hit ground");
                 animator.SetTrigger("HitGround");
                 break;
+            case "Enemy":
+                animator.SetTrigger("HitGround");
+                break;
+        }
+        if (collision.gameObject.layer == 9)
+        {
+            animator.SetTrigger("HitGround");
         }
     }
 
