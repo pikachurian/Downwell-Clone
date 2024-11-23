@@ -31,8 +31,17 @@ public class playerController : MonoBehaviour
     //Stomping
     public float stompBoost = 5f;
 
+    //Enemy Interactions
+    //public bool isKnockbacked = false;
+    public float immue_timer = 0f;
+    public bool immune = false;
+    public float knockbackForcement = 13f;
+    public float immune_time = 0.5f;
 
     //public KeyCode shootInput;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -47,11 +56,14 @@ public class playerController : MonoBehaviour
     void Update()
     {
         Flip();
-        Running();
+        if (!immune)
+        { Running(); }
+       
         Jump();
         CheckGrounded();
         Shoot();
         SwitchAnimation();
+        Immue();
     }
 
     void CheckGrounded()
@@ -204,7 +216,48 @@ public class playerController : MonoBehaviour
                 SetAmmo(ammo_max);
                 myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, stompBoost);
             }
+
+            if (collision.transform.position.y > transform.position.y && !immune)
+            {
+                Vector2 knockbackDirection = (transform.position - collision.transform.position).normalized;
+                Vector2 force = knockbackDirection * knockbackForcement;
+
+                    switch (collision.gameObject.tag)
+                    {
+                        case "Bad_Bubble":
+                            
+                            myRigidbody.AddForce(force, ForceMode2D.Impulse);
+                            immune = true;
+                            break;
+                    case "Turtle":
+
+                        myRigidbody.AddForce(force, ForceMode2D.Impulse);
+                        immune = true;
+                        break;
+                }
+                
+                
+
+
+               
+               
+            }
         }
+    }
+
+   
+    private void Immue()
+    {
+        if (immune)
+        {
+            immue_timer += Time.deltaTime;
+        }
+        if (immue_timer >= immune_time)
+        {
+            immune = false;
+            immue_timer = 0;
+        }
+
     }
 
     private void OnDrawGizmosSelected()
