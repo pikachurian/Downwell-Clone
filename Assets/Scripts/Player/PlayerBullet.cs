@@ -38,9 +38,17 @@ public class PlayerBullet : MonoBehaviour
                 animator.SetTrigger("HitGround");
                 break;
         }
-        if (collision.gameObject.layer == 9)
+        switch (collision.gameObject.layer)
         {
-            animator.SetTrigger("HitGround");
+            case 9://enemy layer
+                switch (collision.gameObject.tag)
+                {
+                    case "Bad_Bubble":
+                        collision.gameObject.GetComponent<badBubble>().TakeShotDamage(1);
+                        break;
+                }
+                animator.SetTrigger("HitGround");
+                break;
         }
     }
 

@@ -12,7 +12,7 @@ public class badBubble : MonoBehaviour
     public float acceleration = 0.5f; 
     public float speed;
     public float awakeDistance;
-    public Rigidbody2D rigidbody;
+    public Rigidbody2D rb;
     public Vector2 direction;
     public bool isChasingPlayer;
     public bool isBouncing;
@@ -29,6 +29,8 @@ public class badBubble : MonoBehaviour
         death
         }
     private State state = State.awake;
+    public Enemy enemy;
+    public float shotKnockbackValue = 2f;
 
 
     // Start is called before the first frame update
@@ -39,7 +41,8 @@ public class badBubble : MonoBehaviour
         DOTween.SetTweensCapacity(500, 50);
         speed = initalSpeed;
         player = GameObject.FindGameObjectWithTag("Player").gameObject;
-        rigidbody = this.rigidbody;
+        //rigidbody = this.rigidbody;
+        rb = this.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -191,18 +194,27 @@ public class badBubble : MonoBehaviour
 
         if (collision.gameObject.CompareTag("bullet"))
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
 
         if (collision.gameObject.CompareTag("Player"))
         {
             if (collision.transform.position.y > this.transform.position.y)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
             }
         }
 
     }
 
+    public void TakeStompDamage(int amount)
+    {
+        enemy.TakeStompDamage(amount);
+    }
 
+    public void TakeShotDamage(int amount)
+    {
+        enemy.TakeShotDamage(amount);
+        rb.AddForce(Vector2.down * shotKnockbackValue, ForceMode2D.Impulse);
+    }
 }

@@ -210,6 +210,10 @@ public class playerController : MonoBehaviour
                     case "Turtle":
                         collision.gameObject.GetComponent<Turtle>().TakeStompDamage(1);
                         break;
+
+                    case "Bad_Bubble":
+                        collision.gameObject.GetComponent<badBubble>().TakeStompDamage(1);
+                        break;
                 }
 
                 canShoot = true;
@@ -229,12 +233,12 @@ public class playerController : MonoBehaviour
                             myRigidbody.AddForce(force, ForceMode2D.Impulse);
                             immune = true;
                             break;
-                    case "Turtle":
+                        case "Turtle":
 
                         myRigidbody.AddForce(force, ForceMode2D.Impulse);
                         immune = true;
                         break;
-                }
+                    }
                 
                 
 

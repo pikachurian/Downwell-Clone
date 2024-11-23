@@ -389,7 +389,7 @@ GameObject:
   - component: {fileID: 1778386918888004393}
   - component: {fileID: 7674757033462756552}
   m_Layer: 0
-  m_Name: Rectangular Palette
+  m_Name: Rectangular Palette 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
