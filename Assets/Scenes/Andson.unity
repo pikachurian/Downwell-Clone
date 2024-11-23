@@ -122,7 +122,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &96163177
+--- !u!1001 &114980291
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -134,17 +134,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: bad bubble
       objectReference: {fileID: 0}
-    - target: {fileID: 6724201421095709743, guid: 423466f27fa5bda498715dc9046008fe, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 8008906802201987721, guid: 423466f27fa5bda498715dc9046008fe, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.3382638
+      value: -6.21
       objectReference: {fileID: 0}
     - target: {fileID: 8008906802201987721, guid: 423466f27fa5bda498715dc9046008fe, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.949164
+      value: 1.13
       objectReference: {fileID: 0}
     - target: {fileID: 8008906802201987721, guid: 423466f27fa5bda498715dc9046008fe, type: 3}
       propertyPath: m_LocalPosition.z
@@ -193,11 +189,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2331494464108475779, guid: aaca2e86f8318e747b047c12edcd9c56, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.8866847
+      value: -13.23
       objectReference: {fileID: 0}
     - target: {fileID: 2331494464108475779, guid: aaca2e86f8318e747b047c12edcd9c56, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.682541
+      value: -4.02
       objectReference: {fileID: 0}
     - target: {fileID: 2331494464108475779, guid: aaca2e86f8318e747b047c12edcd9c56, type: 3}
       propertyPath: m_LocalPosition.z
@@ -329,13 +325,21 @@ PrefabInstance:
       propertyPath: ammo_Bar
       value: 
       objectReference: {fileID: 1622926305}
+    - target: {fileID: 1789189938324563575, guid: b8bd26387d9d6274b989099f7d7f64da, type: 3}
+      propertyPath: immune_time
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789189938324563575, guid: b8bd26387d9d6274b989099f7d7f64da, type: 3}
+      propertyPath: knockbackForcement
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 4249315713480475048, guid: b8bd26387d9d6274b989099f7d7f64da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.59
+      value: -2.66
       objectReference: {fileID: 0}
     - target: {fileID: 4249315713480475048, guid: b8bd26387d9d6274b989099f7d7f64da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.82
+      value: 0.87
       objectReference: {fileID: 0}
     - target: {fileID: 4249315713480475048, guid: b8bd26387d9d6274b989099f7d7f64da, type: 3}
       propertyPath: m_LocalPosition.z
@@ -369,9 +373,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5568340965867293464, guid: b8bd26387d9d6274b989099f7d7f64da, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6168153149224277899, guid: b8bd26387d9d6274b989099f7d7f64da, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6578746861258567158, guid: b8bd26387d9d6274b989099f7d7f64da, type: 3}
+      propertyPath: m_LinearDrag
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6578746861258567158, guid: b8bd26387d9d6274b989099f7d7f64da, type: 3}
+      propertyPath: m_GravityScale
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -677,5 +693,5 @@ SceneRoots:
   - {fileID: 1524255716}
   - {fileID: 5554296900707252562}
   - {fileID: 807584004}
-  - {fileID: 96163177}
   - {fileID: 1064377822}
+  - {fileID: 114980291}

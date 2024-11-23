@@ -8,6 +8,7 @@ TagManager:
   - Turtle
   - Bat
   - bullet
+  - Bad_Bubble
   layers:
   - Default
   - TransparentFX
