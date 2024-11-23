@@ -48,7 +48,8 @@ public class Ammo_Bar : MonoBehaviour
             GameObject bulletGUI = Instantiate(bulletGUIprefab);
             bulletGUI.transform.position = bulletGUItransform.position;
             bulletGUI.transform.position +=  new Vector3(0, i * bulletGUIYspace,0);
-            GUIBullets.Add(bulletGUI);
+            GUIBullets.Add(bulletGUI);  
+            bulletGUI.transform.SetParent(this.transform);
         }
 
     }
