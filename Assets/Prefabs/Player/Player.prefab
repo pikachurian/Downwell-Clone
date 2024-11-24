@@ -180,11 +180,15 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7186473266637236345, guid: c5ff04988efe53f4c9df68643d484808, type: 3}
   shootForce: 1
   canShoot: 0
-  shootRateTime: 0.1
+  shootRateTime: 0.15
   bulletSpawnOffset: {x: 0, y: -1.19, z: 0}
   ammo_max: 8
   ammo_Bar: {fileID: 0}
   stompBoost: 10
+  immue_timer: 0
+  immune: 0
+  knockbackForcement: 13
+  immune_time: 0.5
 --- !u!95 &5568340965867293464
 Animator:
   serializedVersion: 5

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerController : MonoBehaviour
 {
@@ -28,6 +29,11 @@ public class playerController : MonoBehaviour
     private int ammo_num;
     public Ammo_Bar ammo_Bar;
 
+    //Health
+    public HealthBar healthBar;
+    public int hpMax = 4;
+    private int hp = 1;
+
     //Stomping
     public float stompBoost = 5f;
 
@@ -50,6 +56,9 @@ public class playerController : MonoBehaviour
         myAnim = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         myFeet = GetComponent<BoxCollider2D>();
+
+        hp = hpMax;
+        healthBar.SetMaxHealth(hpMax);
     }
 
     // Update is called once per frame
@@ -132,7 +141,8 @@ public class playerController : MonoBehaviour
         //This creates a variable/charge jump.
         if (Input.GetButtonUp("Jump") || Input.GetKeyUp("space") || Input.GetKeyUp("up"))
         {
-            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y * jumpDampenPercent);
+            if (myRigidbody.velocity.y > myRigidbody.velocity.y * jumpDampenPercent)
+                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y * jumpDampenPercent);
         }
     }
 
@@ -202,6 +212,7 @@ public class playerController : MonoBehaviour
         if (collision.gameObject.layer == 9)//If on enemy layer
         {
             //print("Player stomped on enemy.");
+            //---Stomp
             if (collision.transform.position.y < transform.position.y)
             {
                 print(collision.gameObject.tag);
@@ -221,6 +232,7 @@ public class playerController : MonoBehaviour
                 myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, stompBoost);
             }
 
+            //---Hit by Enemy
             if (collision.transform.position.y > transform.position.y && !immune)
             {
                 Vector2 knockbackDirection = (transform.position - collision.transform.position).normalized;
@@ -235,15 +247,13 @@ public class playerController : MonoBehaviour
                             break;
                         case "Turtle":
 
-                        myRigidbody.AddForce(force, ForceMode2D.Impulse);
-                        immune = true;
-                        break;
+                            myRigidbody.AddForce(force, ForceMode2D.Impulse);
+                            immune = true;
+                            break;
                     }
-                
-                
 
-
-               
+                //Lose hp
+                TakeDamage(1);
                
             }
         }
@@ -262,6 +272,23 @@ public class playerController : MonoBehaviour
             immue_timer = 0;
         }
 
+    }
+
+    public void TakeDamage(int amount)
+    {
+        hp = Mathf.Max(hp - amount, 0);
+        healthBar.SetHealth(hp);
+
+        if (hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        //Reload scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnDrawGizmosSelected()
