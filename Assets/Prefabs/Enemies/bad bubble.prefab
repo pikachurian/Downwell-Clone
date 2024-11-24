@@ -205,7 +205,7 @@ MonoBehaviour:
   firstBoucefinished: 0
   secondBoucestarted: 0
   enemy: {fileID: 6953131330720692119}
-  shotKnockbackValue: 2
+  shotKnockbackValue: 0.5
 --- !u!114 &6953131330720692119
 MonoBehaviour:
   m_ObjectHideFlags: 0
