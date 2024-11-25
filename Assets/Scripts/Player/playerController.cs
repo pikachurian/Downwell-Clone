@@ -50,6 +50,8 @@ public class playerController : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip introSound;
     private bool hasPlayedIntro = false;
+    public AudioClip jumpSound;
+    public AudioClip landSound;
 
 
 
@@ -83,6 +85,7 @@ public class playerController : MonoBehaviour
 
     void CheckGrounded()
     {
+        bool previousIsGround = isGround;
         isGround = myFeet.IsTouchingLayers(LayerMask.GetMask("Ground")) ||
                    myFeet.IsTouchingLayers(LayerMask.GetMask("Platform"));
 
@@ -106,6 +109,12 @@ public class playerController : MonoBehaviour
             {
                 audioSource.PlayOneShot(introSound);
                 hasPlayedIntro = true;
+            }
+
+            //Play land sound
+            if (previousIsGround == false)
+            {
+                audioSource.PlayOneShot(landSound);
             }
         }
 
@@ -147,6 +156,7 @@ public class playerController : MonoBehaviour
                 //myAnim.SetBool("Jump", true);
                 Vector2 jumpVel = new Vector2(0.0f, jumpSpeed);
                 myRigidbody.velocity = Vector2.up * jumpVel;
+                audioSource.PlayOneShot(jumpSound);
             }
         }
 
