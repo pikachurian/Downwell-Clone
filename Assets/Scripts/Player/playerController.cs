@@ -16,7 +16,7 @@ public class playerController : MonoBehaviour
     private Animator myAnim;
     private Rigidbody2D myRigidbody;
     private BoxCollider2D myFeet;
-    private bool isGround;
+    private bool isGround = false;
 
     //Shooting
     public GameObject bulletPrefab;
@@ -46,6 +46,10 @@ public class playerController : MonoBehaviour
 
     //public KeyCode shootInput;
 
+    //Audio
+    private AudioSource audioSource;
+    public AudioClip introSound;
+    private bool hasPlayedIntro = false;
 
 
 
@@ -59,6 +63,8 @@ public class playerController : MonoBehaviour
 
         hp = hpMax;
         healthBar.SetMaxHealth(hpMax);
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -94,6 +100,13 @@ public class playerController : MonoBehaviour
         {
             canShoot = false;
             SetAmmo(ammo_max);
+
+            //Play intro music if first time touching ground
+            if (hasPlayedIntro == false)
+            {
+                audioSource.PlayOneShot(introSound);
+                hasPlayedIntro = true;
+            }
         }
 
         myAnim.SetFloat("Vertical Speed", myRigidbody.velocity.y);
