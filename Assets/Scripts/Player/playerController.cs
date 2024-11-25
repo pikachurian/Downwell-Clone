@@ -16,7 +16,7 @@ public class playerController : MonoBehaviour
     private Animator myAnim;
     private Rigidbody2D myRigidbody;
     private BoxCollider2D myFeet;
-    private bool isGround;
+    private bool isGround = false;
 
     //Shooting
     public GameObject bulletPrefab;
@@ -46,6 +46,14 @@ public class playerController : MonoBehaviour
 
     //public KeyCode shootInput;
 
+    //Audio
+    public AudioSource audioSource;
+    public AudioClip introSound;
+    private bool hasPlayedIntro = false;
+    public AudioClip jumpSound;
+    public AudioClip landSound;
+    public AudioClip shootSound;
+    public AudioClip reloadSound;
 
 
 
@@ -59,6 +67,8 @@ public class playerController : MonoBehaviour
 
         hp = hpMax;
         healthBar.SetMaxHealth(hpMax);
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -77,6 +87,7 @@ public class playerController : MonoBehaviour
 
     void CheckGrounded()
     {
+        bool previousIsGround = isGround;
         isGround = myFeet.IsTouchingLayers(LayerMask.GetMask("Ground")) ||
                    myFeet.IsTouchingLayers(LayerMask.GetMask("Platform"));
 
@@ -93,7 +104,24 @@ public class playerController : MonoBehaviour
         if (isGround)
         {
             canShoot = false;
-            SetAmmo(ammo_max);
+
+            if (ammo_num < ammo_max)
+            {
+                SetAmmo(ammo_max);
+            }
+
+            //Play intro music if first time touching ground
+            if (hasPlayedIntro == false)
+            {
+                audioSource.PlayOneShot(introSound);
+                hasPlayedIntro = true;
+            }
+
+            //Play land sound
+            if (previousIsGround == false)
+            {
+                audioSource.PlayOneShot(landSound);
+            }
         }
 
         myAnim.SetFloat("Vertical Speed", myRigidbody.velocity.y);
@@ -134,6 +162,7 @@ public class playerController : MonoBehaviour
                 //myAnim.SetBool("Jump", true);
                 Vector2 jumpVel = new Vector2(0.0f, jumpSpeed);
                 myRigidbody.velocity = Vector2.up * jumpVel;
+                audioSource.PlayOneShot(jumpSound);
             }
         }
 
@@ -182,6 +211,8 @@ public class playerController : MonoBehaviour
             SetAmmo(ammo_num -1);
             //Apply bullet "bounce"
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, shootForce);
+
+            audioSource.PlayOneShot(shootSound);
         }
     }
 
@@ -189,6 +220,12 @@ public class playerController : MonoBehaviour
     {
         ammo_num = amount;
         ammo_Bar.SetBulletGUI(ammo_num);
+
+        //Play reload sound.
+        if (amount == ammo_max)
+        {
+            audioSource.PlayOneShot(reloadSound);
+        }
     }
 
     void SwitchAnimation()
