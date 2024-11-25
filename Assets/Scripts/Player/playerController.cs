@@ -54,6 +54,11 @@ public class playerController : MonoBehaviour
     public AudioClip landSound;
     public AudioClip shootSound;
     public AudioClip reloadSound;
+    public AudioClip gemCollectedSound;
+
+    //Gems
+    public GemUI gemUI;
+    public int gemsCollected;
 
 
 
@@ -226,6 +231,14 @@ public class playerController : MonoBehaviour
         {
             audioSource.PlayOneShot(reloadSound);
         }
+    }
+
+    public void AddGems(int amount)
+    {
+        gemsCollected += amount;
+        audioSource.PlayOneShot(gemCollectedSound);
+        gemUI.SetValue(gemsCollected);
+        //print("Got Gems " + amount.ToString());
     }
 
     void SwitchAnimation()

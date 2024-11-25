@@ -6,7 +6,8 @@ public class Gem : MonoBehaviour
 {
     public Rigidbody2D rb;
     public float speed = 1f;
-    public float bounceSpeed = 0.5f;
+    //public float bounceSpeed = 0.5f;
+    public int gemValue = 2;
 
     private void Start()
     {
@@ -15,24 +16,39 @@ public class Gem : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (rb.velocity.magnitude > speed)
+        /*if (rb.velocity.magnitude > speed)
         {
             rb.velocity = rb.velocity.normalized * speed;
-        }
+        }*/
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (rb.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             // Magnitude of the velocity vector is speed of the object (we will use it for constant speed so object never stop)
             //float speed = rb.velocity.magnitude;
 
             // Reflect params must be normalized so we get new direction
-            Vector3 direction = Vector3.Reflect(rb.velocity.normalized, collision.contacts[0].normal);
+            //Vector3 direction = Vector3.Reflect(rb.velocity.normalized, collision.contacts[0].normal);
 
             // Like earlier wrote: velocity vector is magnitude (speed) and direction (a new one)
-            rb.velocity = direction * bounceSpeed;
+            //rb.velocity = direction * bounceSpeed;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Collected(collision.gameObject.GetComponent<playerController>());
+        }
+    }
+
+    private void Collected(playerController player)
+    {
+        player.AddGems(gemValue);
+        Destroy(this.gameObject);
+    }
+
 }
