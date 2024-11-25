@@ -130,6 +130,8 @@ MonoBehaviour:
   rb: {fileID: 8283225920898738671}
   speed: 5
   gemValue: 2
+  followPlayerRadius: 2
+  followPlayerSpeed: 1
 --- !u!58 &5334316180097348019
 CircleCollider2D:
   m_ObjectHideFlags: 0

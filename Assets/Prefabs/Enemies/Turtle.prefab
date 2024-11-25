@@ -125,6 +125,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotHPMax: 3
   stompedHPMax: 1
+  gemsToSpawn: 2
+  gemSpawnSpeed: 3
+  gemSpawnOffset: {x: 0, y: 0, z: 0}
+  gemPrefab: {fileID: 2788939907703487226, guid: 0bb497f162d0d0745a1b5823616dae85, type: 3}
   audioSource: {fileID: 4599644871727320170}
   splatSound: {fileID: 8300000, guid: f5eb654edb9c0674ab96db3bc9340e6b, type: 3}
   despawnTime: 1

@@ -9,13 +9,30 @@ public class Gem : MonoBehaviour
     //public float bounceSpeed = 0.5f;
     public int gemValue = 2;
 
+    public float followPlayerRadius = 1f;
+    public float followPlayerSpeed = 1f;
+
+    private GameObject playerObject = null;
+
     private void Start()
     {
-        rb.velocity = new Vector3(2f, 1f, 0f) * speed;
+        //rb.velocity = new Vector3(2f, 1f, 0f) * speed;
     }
 
     private void FixedUpdate()
     {
+        if (playerObject == null)
+        {
+            playerObject = GameObject.FindGameObjectWithTag("Player");
+        }else
+        {
+            //Follow player
+            if (Vector3.Distance(playerObject.transform.position, transform.position) <= followPlayerRadius)
+            {
+                Vector3 dir = playerObject.transform.position - transform.position;
+                rb.AddForce(followPlayerSpeed * dir, ForceMode2D.Impulse);
+            }
+        }
         /*if (rb.velocity.magnitude > speed)
         {
             rb.velocity = rb.velocity.normalized * speed;
@@ -49,6 +66,12 @@ public class Gem : MonoBehaviour
     {
         player.AddGems(gemValue);
         Destroy(this.gameObject);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, followPlayerRadius);
     }
 
 }
