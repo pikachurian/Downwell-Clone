@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5568340965867293464}
   - component: {fileID: 1296991469562704072}
   - component: {fileID: 3562403671009246156}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -198,6 +198,9 @@ MonoBehaviour:
   landSound: {fileID: 8300000, guid: 0671ccf7a4186bd4f933258bc23d6f28, type: 3}
   shootSound: {fileID: 8300000, guid: f98b3e0a9020fe0449492792775cfd71, type: 3}
   reloadSound: {fileID: 8300000, guid: b733a35beb7c9154e9e39a45aadbc4bf, type: 3}
+  gemCollectedSound: {fileID: 8300000, guid: df582e24f944ccc498e361a64a846d86, type: 3}
+  gemUI: {fileID: 0}
+  gemsCollected: 0
 --- !u!95 &5568340965867293464
 Animator:
   serializedVersion: 5

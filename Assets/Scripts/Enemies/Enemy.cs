@@ -7,6 +7,11 @@ public class Enemy : MonoBehaviour
     public int shotHPMax = 3;
     public int stompedHPMax = 1;
 
+    public int gemsToSpawn = 2;
+    public float gemSpawnSpeed = 10;
+    public Vector3 gemSpawnOffset = Vector3.zero;
+    public GameObject gemPrefab;
+
     public AudioSource audioSource;
     public AudioClip splatSound;
 
@@ -56,5 +61,16 @@ public class Enemy : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         GetComponent<SpriteRenderer>().enabled = false;
         isDead = true;
+
+        //Spawn Gems.
+        for (int i = 0; i < gemsToSpawn; i++)
+        {
+            GameObject gemInst = Instantiate(gemPrefab);
+            float gemDir = 1f;
+            if (Random.value < 0.5f)
+                gemDir = -1f;
+            gemInst.GetComponent<Rigidbody2D>().velocity = new Vector3(gemDir * 2f, 1f, 0f) * gemSpawnSpeed;
+            gemInst.transform.position = transform.position + gemSpawnOffset;
+        }
     }
 }
