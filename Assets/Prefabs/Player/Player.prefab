@@ -192,9 +192,12 @@ MonoBehaviour:
   immune: 0
   knockbackForcement: 13
   immune_time: 0.5
+  audioSource: {fileID: 3562403671009246156}
   introSound: {fileID: 8300000, guid: 2c2437f786102b34e9122778a14c45e0, type: 3}
   jumpSound: {fileID: 8300000, guid: af38c98041dfd4649b09677f79cd7335, type: 3}
   landSound: {fileID: 8300000, guid: 0671ccf7a4186bd4f933258bc23d6f28, type: 3}
+  shootSound: {fileID: 8300000, guid: f98b3e0a9020fe0449492792775cfd71, type: 3}
+  reloadSound: {fileID: 8300000, guid: b733a35beb7c9154e9e39a45aadbc4bf, type: 3}
 --- !u!95 &5568340965867293464
 Animator:
   serializedVersion: 5

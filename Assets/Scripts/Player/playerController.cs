@@ -47,11 +47,13 @@ public class playerController : MonoBehaviour
     //public KeyCode shootInput;
 
     //Audio
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     public AudioClip introSound;
     private bool hasPlayedIntro = false;
     public AudioClip jumpSound;
     public AudioClip landSound;
+    public AudioClip shootSound;
+    public AudioClip reloadSound;
 
 
 
@@ -102,7 +104,11 @@ public class playerController : MonoBehaviour
         if (isGround)
         {
             canShoot = false;
-            SetAmmo(ammo_max);
+
+            if (ammo_num < ammo_max)
+            {
+                SetAmmo(ammo_max);
+            }
 
             //Play intro music if first time touching ground
             if (hasPlayedIntro == false)
@@ -205,6 +211,8 @@ public class playerController : MonoBehaviour
             SetAmmo(ammo_num -1);
             //Apply bullet "bounce"
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, shootForce);
+
+            audioSource.PlayOneShot(shootSound);
         }
     }
 
@@ -212,6 +220,12 @@ public class playerController : MonoBehaviour
     {
         ammo_num = amount;
         ammo_Bar.SetBulletGUI(ammo_num);
+
+        //Play reload sound.
+        if (amount == ammo_max)
+        {
+            audioSource.PlayOneShot(reloadSound);
+        }
     }
 
     void SwitchAnimation()
