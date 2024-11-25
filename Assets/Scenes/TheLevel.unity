@@ -332,7 +332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraLerpValue: 0.1
   player: {fileID: 1506767179}
-  yOffset: -2
+  yOffset: 0
 --- !u!224 &387310862 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3830981730196091273, guid: e0929904494d4ee4086b2f8c4eaa0b8b, type: 3}
