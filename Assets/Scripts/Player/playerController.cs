@@ -29,6 +29,9 @@ public class playerController : MonoBehaviour
     private int ammo_num;
     public Ammo_Bar ammo_Bar;
 
+    public float shootShakeStrength = 3f;
+    public float shootShakeTime = 0.5f;
+
     //Health
     public HealthBar healthBar;
     public int hpMax = 4;
@@ -59,6 +62,9 @@ public class playerController : MonoBehaviour
     //Gems
     public GemUI gemUI;
     public int gemsCollected;
+    
+    //Camera
+    private CameraMovement cam;
 
 
 
@@ -74,6 +80,8 @@ public class playerController : MonoBehaviour
         healthBar.SetMaxHealth(hpMax);
 
         audioSource = GetComponent<AudioSource>();
+
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMovement>();
     }
 
     // Update is called once per frame
@@ -199,6 +207,7 @@ public class playerController : MonoBehaviour
                 if (shootRateTick <= 0f)
                 {
                     FireBullet();
+                    cam.CameraShake(shootShakeTime, shootShakeStrength);
                     shootRateTick = shootRateTime;
                 }
                 else shootRateTick -= Time.deltaTime;
