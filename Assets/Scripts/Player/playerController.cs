@@ -325,6 +325,11 @@ public class playerController : MonoBehaviour
                             myRigidbody.AddForce(force, ForceMode2D.Impulse);
                             immune = true;
                             break;
+                        case "snail":
+
+                            myRigidbody.AddForce(force, ForceMode2D.Impulse);
+                            immune = true;
+                            break;
                 }
 
                 //Lose hp

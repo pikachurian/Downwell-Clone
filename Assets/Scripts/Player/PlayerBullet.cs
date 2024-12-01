@@ -52,6 +52,9 @@ public class PlayerBullet : MonoBehaviour
                     case "Bat":
                         collision.gameObject.GetComponent<Bat>().TakeShotDamage(1);
                         break;
+                    case "snail":
+                        collision.gameObject.GetComponent<Snail>().TakeShotDamage(1);
+                        break;
                 }
                 animator.SetTrigger("HitGround");
                 break;

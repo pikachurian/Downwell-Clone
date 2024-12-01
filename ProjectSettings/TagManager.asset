@@ -10,6 +10,7 @@ TagManager:
   - bullet
   - Bad_Bubble
   - worm
+  - snail
   layers:
   - Default
   - TransparentFX
