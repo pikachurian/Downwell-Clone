@@ -284,6 +284,9 @@ public class playerController : MonoBehaviour
                     case "Bad_Bubble":
                         collision.gameObject.GetComponent<badBubble>().TakeStompDamage(1);
                         break;
+                    case "worm":
+                        collision.gameObject.GetComponent<Worm>().TakeStompDamage(1);
+                        break;
                 }
 
                 canShoot = true;
@@ -309,7 +312,12 @@ public class playerController : MonoBehaviour
                             myRigidbody.AddForce(force, ForceMode2D.Impulse);
                             immune = true;
                             break;
-                    }
+                        case "worm":
+
+                            myRigidbody.AddForce(force, ForceMode2D.Impulse);
+                            immune = true;
+                            break;
+                }
 
                 //Lose hp
                 TakeDamage(1);

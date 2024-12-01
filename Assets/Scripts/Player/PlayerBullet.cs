@@ -46,6 +46,9 @@ public class PlayerBullet : MonoBehaviour
                     case "Bad_Bubble":
                         collision.gameObject.GetComponent<badBubble>().TakeShotDamage(1);
                         break;
+                    case "worm":
+                        collision.gameObject.GetComponent<Worm>().TakeShotDamage(1);
+                        break;
                 }
                 animator.SetTrigger("HitGround");
                 break;

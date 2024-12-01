@@ -9,6 +9,7 @@ TagManager:
   - Bat
   - bullet
   - Bad_Bubble
+  - worm
   layers:
   - Default
   - TransparentFX
