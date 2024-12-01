@@ -34,6 +34,21 @@ public class PlayerBullet : MonoBehaviour
                 print("Bullet hit ground");
                 animator.SetTrigger("HitGround");
                 break;
+            case "Enemy":
+                animator.SetTrigger("HitGround");
+                break;
+        }
+        switch (collision.gameObject.layer)
+        {
+            case 9://enemy layer
+                switch (collision.gameObject.tag)
+                {
+                    case "Bad_Bubble":
+                        collision.gameObject.GetComponent<badBubble>().TakeShotDamage(1);
+                        break;
+                }
+                animator.SetTrigger("HitGround");
+                break;
         }
     }
 

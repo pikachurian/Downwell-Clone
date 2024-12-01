@@ -5,17 +5,21 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Turtle
+  - Bat
+  - bullet
+  - Bad_Bubble
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Ground
   - Platform
   - PlayerBullet
-  - 
+  - Enemy
   - 
   - 
   - 
