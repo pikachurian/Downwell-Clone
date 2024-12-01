@@ -287,6 +287,9 @@ public class playerController : MonoBehaviour
                     case "worm":
                         collision.gameObject.GetComponent<Worm>().TakeStompDamage(1);
                         break;
+                    case "Bat":
+                        collision.gameObject.GetComponent<Bat>().TakeStompDamage(1);
+                        break;
                 }
 
                 canShoot = true;
@@ -313,6 +316,16 @@ public class playerController : MonoBehaviour
                             immune = true;
                             break;
                         case "worm":
+
+                            myRigidbody.AddForce(force, ForceMode2D.Impulse);
+                            immune = true;
+                            break;
+                        case "Bat":
+
+                            myRigidbody.AddForce(force, ForceMode2D.Impulse);
+                            immune = true;
+                            break;
+                        case "snail":
 
                             myRigidbody.AddForce(force, ForceMode2D.Impulse);
                             immune = true;

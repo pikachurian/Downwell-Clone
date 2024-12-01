@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bad bubble
       objectReference: {fileID: 0}
+    - target: {fileID: 6724201421095709743, guid: 423466f27fa5bda498715dc9046008fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8008906802201987721, guid: 423466f27fa5bda498715dc9046008fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.57
@@ -736,11 +740,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 108299850590902591, guid: caf3efcfc950390498ec249b0323399d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.74
+      value: 0.66
       objectReference: {fileID: 0}
     - target: {fileID: 108299850590902591, guid: caf3efcfc950390498ec249b0323399d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.73
+      value: -1.27
       objectReference: {fileID: 0}
     - target: {fileID: 108299850590902591, guid: caf3efcfc950390498ec249b0323399d, type: 3}
       propertyPath: m_LocalPosition.z
