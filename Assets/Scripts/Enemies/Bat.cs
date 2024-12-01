@@ -16,11 +16,16 @@ public class Bat : MonoBehaviour
     private Vector2 direction;
     public Collider2D bat;
     public Collider2D playerCollider;
+    public Enemy enemy;
+    private Rigidbody2D rb;
+    public float shotKnockbackValue = 2f;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").gameObject;
+        enemy = GetComponent<Enemy>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -63,5 +68,16 @@ public class Bat : MonoBehaviour
         }
 
         //Physics2D.IgnoreCollision(bat, playerCollider, false);
+    }
+
+    public void TakeStompDamage(int amount)
+    {
+        enemy.TakeStompDamage(amount);
+    }
+
+    public void TakeShotDamage(int amount)
+    {
+        enemy.TakeShotDamage(amount);
+        rb.AddForce(Vector2.down * shotKnockbackValue, ForceMode2D.Impulse);
     }
 }
