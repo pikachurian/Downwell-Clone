@@ -37,59 +37,26 @@ public class Snail : MonoBehaviour
 
         if (this.transform.position.x < 0)
         {
-            spriteRenderer.flipX = true;
+            
         }
         else if (this.transform.position.x > 0)
         {
-            spriteRenderer.flipX = false;
+            this.transform.localScale = new Vector3(this.transform.localScale.x * -1,this.transform.localScale.y,0);
         }
+
+       
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //rb.velocity = Vector2.zero;
-
-        //UpdateGroundChecks();
-
-        /* (isWallUpFront)
-        {
-            facing *= -1;
-        }*/
+        
 
         rb.velocity = new Vector2(0f, speed * facing);
 
-        AttackWallTimer();
 
-        if (this.transform.position.x < -4.75f)
-        {
-            transform.position = new Vector3(-4.75f, this.transform.position.y, this.transform.position.z);
-        }
-        if (this.transform.position.x > 3.7f)
-        {
-            transform.position = new Vector3(3.7f, this.transform.position.y, this.transform.position.z);
-        }
-
-        /*if (stateTick <= 0)
-        {
-            SetIsResting(!isResting);
-        }
-        else
-        {
-            stateTick -= Time.deltaTime;
-
-            if (!isResting)
-            {
-                if (isWallInFront || !isGroundInFront)
-                {
-                    if (facing == 1f)
-                        SetIsFacingRight(false);
-                    else SetIsFacingRight(true);
-                }
-
-                rb.velocity = new Vector2(speed * facing, 0f);
-            }
-        }*/
+      
     }
 
     public void TakeStompDamage(int amount)
@@ -102,10 +69,58 @@ public class Snail : MonoBehaviour
         enemyScript.TakeShotDamage(amount);
     }
 
+    bool IsLeftUpClear(float distance, LayerMask wallMask)
+    {
+
+        // Perform the raycast
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector3(-1,1,0), distance, wallMask);
+
+        // Check if the raycast hit anything
+        if (hit.collider == null)
+        {
+            // No wall was detected in the left-up direction
+            return true;
+        }
+        else
+        {
+            // Wall was detected
+            return false;
+        }
+    }
+
+    bool IsRightUpClear(float distance, LayerMask wallMask)
+    {
+
+        // Perform the raycast
+        RaycastHit2D hit = Physics2D.Raycast(transform.position,  new Vector3(1, 1, 0), distance, wallMask);
+
+        // Check if the raycast hit anything
+        if (hit.collider == null)
+        {
+            // No wall was detected in the left-up direction
+            return true;
+        }
+        else
+        {
+            // Wall was detected
+            return false;
+        }
+    }
+
+
     private void UpdateGroundChecks()
     {
-        isWallUpFront = Physics2D.Raycast(transform.position, Vector2.up * facing, upFrontDistanceCheck, groundCheckMask);
-        //isGroundUpFront = Physics2D.Raycast(transform.position + Vector3.up * facing * upFrontDistanceCheck, Vector2.down, groundDistanceCheck, groundCheckMask);
+     //   isWallUpFront = Physics2D.Raycast(transform.position, Vector2.up * facing, upFrontDistanceCheck, groundCheckMask);
+        //isGroundUpFront = Physics2D.Raycast(transform.position, Vector2.up * facing, groundDistanceCheck, groundCheckMask);
+
+        if (this.transform.position.x > 0)
+        {
+            isGroundUpFront = IsRightUpClear(groundDistanceCheck,groundCheckMask);
+        }
+        if (this.transform.position.x < 0)
+        {
+            isGroundUpFront = IsLeftUpClear(groundDistanceCheck, groundCheckMask);
+        }
     }
 
     private void SetIsFacingUp(bool newIsFacingUp)
@@ -134,13 +149,28 @@ public class Snail : MonoBehaviour
         }
     }
 
-    private void AttackWallTimer()
+    private void LeaveWall()
     {
-        timer++;
-        if(timer >= 7)
+        if (this.transform.position.x < 0)
         {
-            AttachWall();
-            timer = 0;
+
+            rb.AddForce(Vector3.right * force, ForceMode2D.Impulse);
+        }
+        else if (this.transform.position.x > 0)
+        {
+            rb.AddForce(Vector3.left * force, ForceMode2D.Impulse);
+        }
+    }
+
+    public void SetFace()
+    {
+        if (facing == 1f)
+        {
+            SetIsFacingUp(false);
+        }
+        else if (facing == -1f)
+        {
+            SetIsFacingUp(true);
         }
     }
 
@@ -148,50 +178,24 @@ public class Snail : MonoBehaviour
     {
         if(collision.gameObject.tag == "Ground")
         {
+            LeaveWall();
+
             if (collision.transform.position.y > this.transform.position.y && collision.transform.position.x >= this.transform.position.x)
             {
-                if (facing == 1f)
-                {
-                    SetIsFacingUp(false);
-                }
-                else if (facing == -1f)
-                {
-                    SetIsFacingUp(true);
-                }
+                SetFace();
             }
             else if (collision.transform.position.y < this.transform.position.y && collision.transform.position.x >= this.transform.position.x)
             {
-                if (facing == 1f)
-                {
-                    SetIsFacingUp(true);
-                }
-                else if (facing == -1f)
-                {
-                    SetIsFacingUp(false);
-                }
+                SetFace();
             }
 
             if (collision.transform.position.y > this.transform.position.y && collision.transform.position.x <= this.transform.position.x)
             {
-                if (facing == 1f)
-                {
-                    SetIsFacingUp(false);
-                }
-                else if (facing == -1f)
-                {
-                    SetIsFacingUp(true);
-                }
+                SetFace();
             }
             else if (collision.transform.position.y < this.transform.position.y && collision.transform.position.x <= this.transform.position.x)
             {
-                if (facing == 1f)
-                {
-                    SetIsFacingUp(true);
-                }
-                else if (facing == -1f)
-                {
-                    SetIsFacingUp(false);
-                }
+                SetFace();
             }
         }
     }
