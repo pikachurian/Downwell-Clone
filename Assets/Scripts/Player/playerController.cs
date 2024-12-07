@@ -65,6 +65,7 @@ public class playerController : MonoBehaviour
     //Gems
     public GemUI gemUI;
     public GemHighUI gemHighUI;
+    public GameObject gemHighParticles;
     public int gemsCollected;
 
     private bool isHigh = false;
@@ -198,6 +199,8 @@ public class playerController : MonoBehaviour
     public void SetHigh(bool newIsHigh)
     {
         isHigh = newIsHigh;
+
+        gemHighParticles.SetActive(isHigh);
     }
     void Shoot()
     {
