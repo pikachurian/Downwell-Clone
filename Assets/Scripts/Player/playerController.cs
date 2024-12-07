@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.SceneManagement;
 
 public class playerController : MonoBehaviour
@@ -20,6 +21,7 @@ public class playerController : MonoBehaviour
 
     //Shooting
     public GameObject bulletPrefab;
+    public ParticleSystem bulletCasingEmitter;
     public float shootForce = 1f;
     public bool canShoot = false;
     public float shootRateTime = 0.5f;
@@ -209,6 +211,8 @@ public class playerController : MonoBehaviour
                     FireBullet();
                     cam.CameraShake(shootShakeTime, shootShakeStrength);
                     shootRateTick = shootRateTime;
+                    bulletCasingEmitter.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                    bulletCasingEmitter.Play(true);
                 }
                 else shootRateTick -= Time.deltaTime;
             }
