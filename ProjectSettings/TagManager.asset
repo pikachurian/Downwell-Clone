@@ -11,6 +11,7 @@ TagManager:
   - Bad_Bubble
   - worm
   - snail
+  - GemHighUI
   layers:
   - Default
   - TransparentFX

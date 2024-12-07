@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7610002066061560718}
   - component: {fileID: -6503679803803494837}
   m_Layer: 8
-  m_Name: PlayerBullet
+  m_Name: PlayerBulletHigh
   m_TagString: bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2c47b6e066691594e8b18a14143751fd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eeb8c7cba61d642448b780e6c3a04ef9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,7 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eeb7be5bce8d7244b3a4f8311e9d2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 25
+  damage: 2
 --- !u!50 &7382801827518949038
 Rigidbody2D:
   serializedVersion: 4
@@ -183,7 +184,7 @@ Animator:
   m_GameObject: {fileID: 7186473266637236345}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1049e53e6e71d1946ac7006bfd6c2b49, type: 2}
+  m_Controller: {fileID: 9100000, guid: 84ed30f27ced8a047999e7737eda5d49, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
