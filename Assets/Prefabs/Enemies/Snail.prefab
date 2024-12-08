@@ -110,6 +110,7 @@ MonoBehaviour:
   facing: 1
   force: 1
   timer: 0
+  timePause: {fileID: 7364760841685859551, guid: a475f56fe0352de478cd72fcdd4aa9a3, type: 3}
 --- !u!114 &9135460902141139722
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerBullet : MonoBehaviour
 {
     public float speed;
+    public int damage = 1;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -44,16 +45,16 @@ public class PlayerBullet : MonoBehaviour
                 switch (collision.gameObject.tag)
                 {
                     case "Bad_Bubble":
-                        collision.gameObject.GetComponent<badBubble>().TakeShotDamage(1);
+                        collision.gameObject.GetComponent<badBubble>().TakeShotDamage(damage);
                         break;
                     case "worm":
-                        collision.gameObject.GetComponent<Worm>().TakeShotDamage(1);
+                        collision.gameObject.GetComponent<Worm>().TakeShotDamage(damage);
                         break;
                     case "Bat":
-                        collision.gameObject.GetComponent<Bat>().TakeShotDamage(1);
+                        collision.gameObject.GetComponent<Bat>().TakeShotDamage(damage);
                         break;
                     case "snail":
-                        collision.gameObject.GetComponent<Snail>().TakeShotDamage(1);
+                        collision.gameObject.GetComponent<Snail>().TakeShotDamage(damage);
                         break;
                 }
                 animator.SetTrigger("HitGround");

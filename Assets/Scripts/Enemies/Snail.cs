@@ -25,6 +25,8 @@ public class Snail : MonoBehaviour
     public float force;
     public float timer = 0f;
 
+    public TimePause timePause;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +45,6 @@ public class Snail : MonoBehaviour
         {
             this.transform.localScale = new Vector3(this.transform.localScale.x * -1,this.transform.localScale.y,0);
         }
-
        
 
     }
@@ -51,12 +52,15 @@ public class Snail : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        
-
-        rb.velocity = new Vector2(0f, speed * facing);
-
-
-      
+        if (timePause.timeStop)
+        {
+            rb.velocity = new Vector2(0, 0);
+        }
+        else if (!timePause.timeStop)
+        {
+            rb.velocity = new Vector2(0f, speed * facing);
+        }
+        //rb.velocity = new Vector2(0f, speed * facing);
     }
 
     public void TakeStompDamage(int amount)

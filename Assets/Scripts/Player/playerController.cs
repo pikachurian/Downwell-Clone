@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.SceneManagement;
 
 public class playerController : MonoBehaviour
@@ -20,6 +21,8 @@ public class playerController : MonoBehaviour
 
     //Shooting
     public GameObject bulletPrefab;
+    public GameObject bulletHighPrefab;
+    public ParticleSystem bulletCasingEmitter;
     public float shootForce = 1f;
     public bool canShoot = false;
     public float shootRateTime = 0.5f;
@@ -61,7 +64,11 @@ public class playerController : MonoBehaviour
 
     //Gems
     public GemUI gemUI;
+    public GemHighUI gemHighUI;
+    public GameObject gemHighParticles;
     public int gemsCollected;
+
+    private bool isHigh = false;
     
     //Camera
     private CameraMovement cam;
@@ -82,6 +89,7 @@ public class playerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMovement>();
+        gemHighUI = GameObject.FindGameObjectWithTag("GemHighUI").GetComponent<GemHighUI>();
     }
 
     // Update is called once per frame
@@ -96,6 +104,7 @@ public class playerController : MonoBehaviour
         Shoot();
         SwitchAnimation();
         Immue();
+
     }
 
     void CheckGrounded()
@@ -188,6 +197,12 @@ public class playerController : MonoBehaviour
         }
     }
 
+    public void SetHigh(bool newIsHigh)
+    {
+        isHigh = newIsHigh;
+
+        gemHighParticles.SetActive(isHigh);
+    }
     void Shoot()
     {
         if (Input.GetButtonUp("Jump") || Input.GetKeyUp("space") || Input.GetKeyUp("up"))
@@ -209,6 +224,8 @@ public class playerController : MonoBehaviour
                     FireBullet();
                     cam.CameraShake(shootShakeTime, shootShakeStrength);
                     shootRateTick = shootRateTime;
+                    bulletCasingEmitter.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                    bulletCasingEmitter.Play(true);
                 }
                 else shootRateTick -= Time.deltaTime;
             }
@@ -220,7 +237,12 @@ public class playerController : MonoBehaviour
         //Spawn bullet
         if (ammo_num >= 1)
         {
-            GameObject bulletInst = Instantiate(bulletPrefab);
+            GameObject prefab = bulletPrefab;
+
+            if (isHigh)
+                prefab = bulletHighPrefab;
+
+            GameObject bulletInst = Instantiate(prefab);
             bulletInst.transform.position = transform.position + bulletSpawnOffset;
             SetAmmo(ammo_num -1);
             //Apply bullet "bounce"
@@ -247,6 +269,7 @@ public class playerController : MonoBehaviour
         gemsCollected += amount;
         audioSource.PlayOneShot(gemCollectedSound);
         gemUI.SetValue(gemsCollected);
+        gemHighUI.AddGemsToHigh(amount);
         //print("Got Gems " + amount.ToString());
     }
 

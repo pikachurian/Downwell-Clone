@@ -27,6 +27,8 @@ public class Worm : MonoBehaviour
     private bool isWallInFront = false;
     private bool isGroundInFront = false;
 
+    public TimePause timePause;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,19 +44,24 @@ public class Worm : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //rb.velocity = Vector2.zero;
-
-        UpdateGroundChecks();
-
-        //move the worm
-        rb.velocity = new Vector2(speed * facing, 0f);
-
-        //turn around the worm
-        if (isWallInFront || !isGroundInFront)
+        if (timePause.timeStop)
         {
-            if (facing == 1f)
-                SetIsFacingRight(false);
-            else SetIsFacingRight(true);
+            rb.velocity = new Vector2(0, 0);
+        }
+        else if (!timePause.timeStop)
+        {
+            UpdateGroundChecks();
+
+            //move the worm
+            rb.velocity = new Vector2(speed * facing, 0f);
+
+            //turn around the worm
+            if (isWallInFront || !isGroundInFront)
+            {
+                if (facing == 1f)
+                    SetIsFacingRight(false);
+                else SetIsFacingRight(true);
+            }
         }
 
         /*  if (stateTick <= 0)
