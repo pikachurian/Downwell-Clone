@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UIElements.Experimental;
 
 public class badBubble : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class badBubble : MonoBehaviour
     public Vector3 target;
     public bool firstBoucefinished = false;
     public bool secondBoucestarted = false;
+
+    public TimePause timePause;
     private enum State { 
         awake,
         chase,
@@ -49,20 +52,23 @@ public class badBubble : MonoBehaviour
     void Update()
     {
 
-        switch (state)
-        {
-            case State.awake:
-                Awaking();
-                break;
-            case State.chase:
-                Chasing();
-                break;
-            case State.bounce:
-                Bounce();
-                break;
-            case State.death:
-                break;
-        }
+        //if (!timePause.timeStop)
+        //{
+            switch (state)
+            {
+                case State.awake:
+                    Awaking();
+                    break;
+                case State.chase:
+                    Chasing();
+                    break;
+                case State.bounce:
+                    Bounce();
+                    break;
+                case State.death:
+                    break;
+            }
+        //}
     }
 
     public void Awaking()

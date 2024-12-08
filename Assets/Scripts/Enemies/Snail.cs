@@ -25,6 +25,8 @@ public class Snail : MonoBehaviour
     public float force;
     public float timer = 0f;
 
+    public TimePause timePause;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,8 +54,11 @@ public class Snail : MonoBehaviour
     void FixedUpdate()
     {
         
+        //if (!timePause.timeStop)
+        //{
+            rb.velocity = new Vector2(0f, speed * facing);
+        //}
 
-        rb.velocity = new Vector2(0f, speed * facing);
 
 
       
