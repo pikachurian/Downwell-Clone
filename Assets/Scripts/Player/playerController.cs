@@ -104,6 +104,7 @@ public class playerController : MonoBehaviour
         Shoot();
         SwitchAnimation();
         Immue();
+
     }
 
     void CheckGrounded()
