@@ -12,6 +12,7 @@ TagManager:
   - worm
   - snail
   - GemHighUI
+  - frog
   layers:
   - Default
   - TransparentFX
