@@ -25,27 +25,22 @@ public class TimePause : MonoBehaviour
         //{
         //    UnfreezeTime();
         //}
+        Debug.Log(timeStop);
     }
     public void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {
-            FreezeTime();
+            timeStop = true;
         }
-        else
+    }
+
+    public void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player")
         {
-            ActiveTime();
+            timeStop = false;
         }
-    }
-    public void FreezeTime()
-    {
-        timeStop = true;
-    }
-
-    public void ActiveTime()
-    {
-        timeStop = false;
-
     }
 
     //Previous

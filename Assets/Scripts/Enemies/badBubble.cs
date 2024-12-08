@@ -39,8 +39,6 @@ public class badBubble : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
         DOTween.SetTweensCapacity(500, 50);
         speed = initalSpeed;
         player = GameObject.FindGameObjectWithTag("Player").gameObject;
@@ -51,9 +49,12 @@ public class badBubble : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //if (!timePause.timeStop)
-        //{
+        if (timePause.timeStop)
+        {
+            rb.velocity = new Vector2(0, 0);
+        }
+        else if (!timePause.timeStop)
+        {
             switch (state)
             {
                 case State.awake:
@@ -68,7 +69,7 @@ public class badBubble : MonoBehaviour
                 case State.death:
                     break;
             }
-        //}
+        }
     }
 
     public void Awaking()

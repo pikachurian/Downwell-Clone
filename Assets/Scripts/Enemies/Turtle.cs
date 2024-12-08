@@ -26,6 +26,8 @@ public class Turtle : MonoBehaviour
     private bool isWallInFront = false;
     private bool isGroundInFront = false;
 
+    public TimePause timePause;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,28 +43,33 @@ public class Turtle : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //rb.velocity = Vector2.zero;
-
-        UpdateGroundChecks();
-
-        if (stateTick <= 0)
+        if (timePause.timeStop)
         {
-            SetIsResting(!isResting);
+            rb.velocity = new Vector2(0, 0);
         }
-        else
+        else if (!timePause.timeStop)
         {
-            stateTick -= Time.deltaTime;
+            UpdateGroundChecks();
 
-            if (!isResting)
+            if (stateTick <= 0)
             {
-                if (isWallInFront || !isGroundInFront)
-                {
-                    if (facing == 1f)
-                        SetIsFacingRight(false);
-                    else SetIsFacingRight(true);
-                }
+                SetIsResting(!isResting);
+            }
+            else
+            {
+                stateTick -= Time.deltaTime;
 
-                rb.velocity = new Vector2(speed * facing, 0f);
+                if (!isResting)
+                {
+                    if (isWallInFront || !isGroundInFront)
+                    {
+                        if (facing == 1f)
+                            SetIsFacingRight(false);
+                        else SetIsFacingRight(true);
+                    }
+
+                    rb.velocity = new Vector2(speed * facing, 0f);
+                }
             }
         }
     }
