@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 public class Bat : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class Bat : MonoBehaviour
     private Rigidbody2D rb;
     public float shotKnockbackValue = 2f;
 
+    public TimePause timePause;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,24 +34,31 @@ public class Bat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (currentState)
+        if (timePause.timeStop)
         {
-            case State.idle:
-
-                break;
-
-            case State.chase:
-                chase();
-                break;
-
-            case State.death:
-                Destroy(this.gameObject);
-                break;
+            rb.velocity = new Vector2(0, 0);
         }
-
-        if (player.transform.position.y <= this.transform.position.y)
+        else if (!timePause.timeStop)
         {
-            currentState = State.chase;
+            switch (currentState)
+            {
+                case State.idle:
+
+                    break;
+
+                case State.chase:
+                    chase();
+                    break;
+
+                case State.death:
+                    Destroy(this.gameObject);
+                    break;
+            }
+
+            if (player.transform.position.y <= this.transform.position.y)
+            {
+                currentState = State.chase;
+            }
         }
 
         //Physics2D.IgnoreCollision(bat, playerCollider, false);
