@@ -32,7 +32,7 @@ public class Frog : MonoBehaviour
 
     public float timer = 180f;
     private float timeCount;
-
+    public float awakeDistance;
 
     // Start is called before the first frame update
     void Start()
@@ -43,16 +43,19 @@ public class Frog : MonoBehaviour
         SetIsFacingRight((Random.value < 0.5));
         frogFeet = GetComponent<BoxCollider2D>();
         timeCount = timer;
+        player = GameObject.FindGameObjectWithTag("Player").gameObject;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
+
         if (timePause.timeStop)
         {
             rb.velocity = new Vector2(0, 0);
         }
-        else if (!timePause.timeStop)
+        else if (!timePause.timeStop && distanceToPlayer <= awakeDistance)
         {
             CheckGrounded();
             if (isGround)

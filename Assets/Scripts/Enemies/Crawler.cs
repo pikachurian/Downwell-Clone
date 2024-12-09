@@ -22,6 +22,11 @@ public class Crawler : MonoBehaviour
     public float turnTimer = 0.05f;
     public float tick = 0f;
     public bool hasTurned = false;
+
+    public TimePause timePause;
+
+    public float awakeDistance;
+    public GameObject player;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,16 +36,28 @@ public class Crawler : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         DirectionDetection();
+        player = GameObject.FindGameObjectWithTag("Player").gameObject;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
+
+        if (timePause.timeStop)
+        {
+            speed = 0F;
+        }
+        else if (!timePause.timeStop && distanceToPlayer <= awakeDistance)
+        {
+            speed = 1f;
+            transform.Translate(direction * speed * Time.deltaTime);
+        }
 
         UpdateGroundChecks();
 
         //move the worm
-        transform.Translate(direction * speed * Time.deltaTime);
+        
 
         //turn around the worm
 

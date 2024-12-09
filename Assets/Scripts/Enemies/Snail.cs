@@ -30,6 +30,8 @@ public class Snail : MonoBehaviour
     public float tick;
     public float turnTimer;
     public TimePause timePause;
+    public float awakeDistance;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,8 @@ public class Snail : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         DirectionDetection();
+
+        player = GameObject.FindGameObjectWithTag("Player").gameObject;
 
 
     }
@@ -61,11 +65,13 @@ public class Snail : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
+
         if (timePause.timeStop)
         {
             speed = 0F;
         }
-        else if (!timePause.timeStop)
+        else if (!timePause.timeStop && distanceToPlayer <= awakeDistance)
         {
             speed = 1f;
             transform.Translate(Vector2.up * speed * Time.deltaTime);

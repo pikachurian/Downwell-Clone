@@ -293,11 +293,11 @@ public class playerController : MonoBehaviour
         Vector2 knockbackDirection_1 = (transform.position - collision.transform.position).normalized;
         Vector2 force_1 = knockbackDirection_1 * knockbackForcement;
 
-        if (collision.gameObject.tag == "snail" && collision.gameObject.tag == "crawler" && !immune)
+        if (collision.gameObject.tag == "snail" || collision.gameObject.tag == "crawler" && !immune)
         {
             print("11111");
             myRigidbody.AddForce(force_1, ForceMode2D.Impulse);
-            immune = true;
+            immune = true; 
             TakeDamage(1);
         }
 

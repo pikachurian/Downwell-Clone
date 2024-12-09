@@ -114,6 +114,7 @@ MonoBehaviour:
   player: {fileID: 0}
   isGround: 0
   timer: 180
+  awakeDistance: 25
 --- !u!114 &3585078572411196713
 MonoBehaviour:
   m_ObjectHideFlags: 0

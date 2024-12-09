@@ -112,6 +112,9 @@ MonoBehaviour:
   turnTimer: 0.34
   tick: 0
   hasTurned: 0
+  timePause: {fileID: 7364760841685859551, guid: a475f56fe0352de478cd72fcdd4aa9a3, type: 3}
+  awakeDistance: 25
+  player: {fileID: 0}
 --- !u!114 &8311913050576290007
 MonoBehaviour:
   m_ObjectHideFlags: 0
