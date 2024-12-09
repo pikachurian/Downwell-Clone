@@ -12,6 +12,7 @@ TagManager:
   - worm
   - snail
   - GemHighUI
+  - crawler
   layers:
   - Default
   - TransparentFX
