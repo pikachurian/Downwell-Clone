@@ -16,6 +16,7 @@ TagManager:
   - platform
   - crawler
   - obstacle
+  - gempile
   layers:
   - Default
   - TransparentFX

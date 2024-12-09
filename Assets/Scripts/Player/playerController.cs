@@ -69,10 +69,18 @@ public class playerController : MonoBehaviour
     public int gemsCollected;
 
     private bool isHigh = false;
+
+    //Combo
+    public ComboUI comboUI;
+    public int currentCombo = 0;
+    public int highestCombo = 0;
+    public int comboShowUIThreshold = 5;
     
     //Camera
     private CameraMovement cam;
 
+    //Game Over
+    public GameOverScreen gameOverScreen;
 
 
     // Start is called before the first frame update
@@ -127,6 +135,8 @@ public class playerController : MonoBehaviour
         {
             canShoot = false;
 
+            EndCombo();
+
             if (ammo_num < ammo_max)
             {
                 SetAmmo(ammo_max);
@@ -144,6 +154,11 @@ public class playerController : MonoBehaviour
             {
                 audioSource.PlayOneShot(landSound);
             }
+        }else
+        {
+            //Set can shoot
+            if (myRigidbody.velocity.y < 0)
+                canShoot = true;
         }
 
         myAnim.SetFloat("Vertical Speed", myRigidbody.velocity.y);
@@ -329,7 +344,7 @@ public class playerController : MonoBehaviour
                         break;
                 }
 
-                if (collision.gameObject.tag != "snail" && collision.gameObject.tag != "crawler")
+                if (collision.gameObject.tag != "snail" && collision.gameObject.tag != "crawler" && collision.gameObject.tag != "gempile")
                 {
                     canShoot = true;
                     SetAmmo(ammo_max);
@@ -424,8 +439,38 @@ public class playerController : MonoBehaviour
 
     private void Die()
     {
-        //Reload scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //Enable Game Over Screen.
+        gameOverScreen.Setup(gemsCollected, highestCombo);
+
+        //Disable this player.
+        this.enabled = false;
+        gameObject.SetActive(false);
+    }
+
+    public void AddToCombo(int amount)
+    {
+        currentCombo += amount;
+
+        if (currentCombo >= comboShowUIThreshold)
+        {
+            if (comboUI.gameObject.activeInHierarchy == false)
+                comboUI.Show(currentCombo);
+            //print("COMBO " + currentCombo.ToString());
+         
+            comboUI.SetValue(currentCombo);
+        }
+
+        if (currentCombo > highestCombo)
+            highestCombo = currentCombo;
+
+        //print("COMBO " + currentCombo.ToString());
+    }
+
+    private void EndCombo()
+    {
+        currentCombo = 0;
+
+        comboUI.Hide();
     }
 
     private void OnDrawGizmosSelected()
