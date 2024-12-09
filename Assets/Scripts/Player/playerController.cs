@@ -387,7 +387,16 @@ public class playerController : MonoBehaviour
         }
     }
 
-   
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "obstacle" && collision.transform.position.y < transform.position.y)
+        {
+            collision.gameObject.GetComponent<Obstacle>().TakeStompDamage(1);
+            canShoot = true;
+            SetAmmo(ammo_max);
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, stompBoost);
+        }
+    }
     private void Immue()
     {
         if (immune)

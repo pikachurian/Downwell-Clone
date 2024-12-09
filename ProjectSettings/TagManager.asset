@@ -13,6 +13,9 @@ TagManager:
   - snail
   - GemHighUI
   - frog
+  - platform
+  - crawler
+  - obstacle
   layers:
   - Default
   - TransparentFX
@@ -55,4 +58,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 1697527583
+    locked: 0
+  - name: OBS
+    uniqueID: 2675278227
     locked: 0
