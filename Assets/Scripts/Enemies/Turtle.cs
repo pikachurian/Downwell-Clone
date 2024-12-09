@@ -46,9 +46,11 @@ public class Turtle : MonoBehaviour
         if (timePause.timeStop)
         {
             rb.velocity = new Vector2(0, 0);
+            animator.enabled = false;
         }
         else if (!timePause.timeStop)
         {
+            animator.enabled = true;
             UpdateGroundChecks();
 
             if (stateTick <= 0)
