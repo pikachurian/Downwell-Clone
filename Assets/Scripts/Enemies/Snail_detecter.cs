@@ -28,9 +28,7 @@ public class Snail_detecter : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            snail.SetFace();
-
-            this.transform.localPosition = new Vector3(this.transform.localPosition.x, -this.transform.localPosition.y, 0);
+           
         }
     }
 
