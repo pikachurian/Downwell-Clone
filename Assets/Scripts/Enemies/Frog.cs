@@ -33,6 +33,7 @@ public class Frog : MonoBehaviour
     public float timer = 180f;
     private float timeCount;
     public float awakeDistance;
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,7 @@ public class Frog : MonoBehaviour
         frogFeet = GetComponent<BoxCollider2D>();
         timeCount = timer;
         player = GameObject.FindGameObjectWithTag("Player").gameObject;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -72,6 +74,7 @@ public class Frog : MonoBehaviour
                 if (timeCount < 0)
                 {
                     Jump();
+                    anim.SetTrigger("Jump");
                 }
             }
         }
