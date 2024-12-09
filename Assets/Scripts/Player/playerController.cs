@@ -295,7 +295,6 @@ public class playerController : MonoBehaviour
 
         if (collision.gameObject.tag == "snail" || collision.gameObject.tag == "crawler" && !immune)
         {
-            print("11111");
             myRigidbody.AddForce(force_1, ForceMode2D.Impulse);
             immune = true; 
             TakeDamage(1);

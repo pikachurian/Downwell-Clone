@@ -5028,7 +5028,7 @@ MonoBehaviour:
   stompBoost: 10
   immue_timer: 0
   immune: 0
-  knockbackForcement: 13
+  knockbackForcement: 6
   immune_time: 0.5
   audioSource: {fileID: 3562403671009246156}
   introSound: {fileID: 8300000, guid: 2c2437f786102b34e9122778a14c45e0, type: 3}
