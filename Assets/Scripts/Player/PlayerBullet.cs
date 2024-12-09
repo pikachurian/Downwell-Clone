@@ -59,7 +59,10 @@ public class PlayerBullet : MonoBehaviour
                     case "crawler":
                         collision.gameObject.GetComponent<Crawler>().TakeShotDamage(damage);
                         break;
-                   
+                    case "frog":
+                        collision.gameObject.GetComponent<Frog>().TakeShotDamage(damage);
+                        break;
+
                 }
                 animator.SetTrigger("HitGround");
                 break;

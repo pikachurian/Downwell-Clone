@@ -25,6 +25,7 @@ public class badBubble : MonoBehaviour
     public bool secondBoucestarted = false;
 
     public TimePause timePause;
+
     private enum State { 
         awake,
         chase,

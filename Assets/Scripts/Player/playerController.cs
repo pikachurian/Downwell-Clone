@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
+//using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.SceneManagement;
 
 public class playerController : MonoBehaviour
@@ -342,6 +342,9 @@ public class playerController : MonoBehaviour
                     case "Bat":
                         collision.gameObject.GetComponent<Bat>().TakeStompDamage(1);
                         break;
+                    case "frog":
+                        collision.gameObject.GetComponent<Frog>().TakeStompDamage(1);
+                        break;
                 }
 
                 if (collision.gameObject.tag != "snail" && collision.gameObject.tag != "crawler" && collision.gameObject.tag != "gempile")
@@ -387,6 +390,11 @@ public class playerController : MonoBehaviour
                             immune = true;
                             break;
                         case "crawler":
+
+                            myRigidbody.AddForce(force, ForceMode2D.Impulse);
+                            immune = true;
+                            break;
+                        case "frog":
 
                             myRigidbody.AddForce(force, ForceMode2D.Impulse);
                             immune = true;
