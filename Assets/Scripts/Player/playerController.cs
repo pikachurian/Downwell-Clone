@@ -106,6 +106,7 @@ public class playerController : MonoBehaviour
         Shoot();
         SwitchAnimation();
         Immue();
+
     }
 
     void CheckGrounded()
@@ -290,12 +291,26 @@ public class playerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+        Vector2 knockbackDirection_1 = (transform.position - collision.transform.position).normalized;
+        Vector2 force_1 = knockbackDirection_1 * knockbackForcement;
+
+        if (collision.gameObject.tag == "snail" || collision.gameObject.tag == "crawler" && !immune)
+        {
+            myRigidbody.AddForce(force_1, ForceMode2D.Impulse);
+            immune = true; 
+            TakeDamage(1);
+        }
+
         //Stomping
         //print(collision.gameObject.layer);
         if (collision.gameObject.layer == 9)//If on enemy layer
         {
             //print("Player stomped on enemy.");
             //---Stomp
+
+           
+
             if (collision.transform.position.y < transform.position.y)
             {
                 print(collision.gameObject.tag);
@@ -316,9 +331,13 @@ public class playerController : MonoBehaviour
                         break;
                 }
 
-                canShoot = true;
-                SetAmmo(ammo_max);
-                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, stompBoost);
+                if (collision.gameObject.tag != "snail" && collision.gameObject.tag != "crawler" && collision.gameObject.tag != "gempile")
+                {
+                    canShoot = true;
+                    SetAmmo(ammo_max);
+                    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, stompBoost);
+                }
+                
             }
 
             //---Hit by Enemy
@@ -354,16 +373,32 @@ public class playerController : MonoBehaviour
                             myRigidbody.AddForce(force, ForceMode2D.Impulse);
                             immune = true;
                             break;
+                        case "crawler":
+
+                            myRigidbody.AddForce(force, ForceMode2D.Impulse);
+                            immune = true;
+                            break;
                 }
 
                 //Lose hp
                 TakeDamage(1);
                
             }
+
+           
         }
     }
 
-   
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "obstacle" && collision.transform.position.y < transform.position.y)
+        {
+            collision.gameObject.GetComponent<Obstacle>().TakeStompDamage(1);
+            canShoot = true;
+            SetAmmo(ammo_max);
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, stompBoost);
+        }
+    }
     private void Immue()
     {
         if (immune)

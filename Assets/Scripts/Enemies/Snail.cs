@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Snail : MonoBehaviour
 {
-    public float speed = 2f;
+    public float speed = 1f;
 
     public float upFrontDistanceCheck = 0.5f;
     public float groundDistanceCheck = 0.5f;
@@ -18,12 +18,20 @@ public class Snail : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     public float facing = 1f;
+    public string leftOrRight;
 
+    private Vector2 direction;
     private bool isWallUpFront = false;
     private bool isGroundUpFront = false;
 
     public float force;
     public float timer = 0f;
+    public bool hasTurned;
+    public float tick;
+    public float turnTimer;
+    public TimePause timePause;
+    public float awakeDistance;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -33,63 +41,46 @@ public class Snail : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        SetIsFacingUp((Random.value < 0.5));
+        DirectionDetection();
 
+        player = GameObject.FindGameObjectWithTag("Player").gameObject;
+
+
+    }
+
+    void DirectionDetection()
+    {
+        if (this.transform.position.x > 0)
+        {
+            leftOrRight = "right";
+            direction = Vector2.right;
+        }
         if (this.transform.position.x < 0)
         {
-            spriteRenderer.flipX = true;
-        }
-        else if (this.transform.position.x > 0)
-        {
-            spriteRenderer.flipX = false;
+            leftOrRight = "left";
+            direction = Vector2.left;
         }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //rb.velocity = Vector2.zero;
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
-        //UpdateGroundChecks();
-
-        /* (isWallUpFront)
+        if (timePause.timeStop)
         {
-            facing *= -1;
-        }*/
-
-        rb.velocity = new Vector2(0f, speed * facing);
-
-        AttackWallTimer();
-
-        if (this.transform.position.x < -4.75f)
-        {
-            transform.position = new Vector3(-4.75f, this.transform.position.y, this.transform.position.z);
+            speed = 0F;
         }
-        if (this.transform.position.x > 3.7f)
+        else if (!timePause.timeStop && distanceToPlayer <= awakeDistance)
         {
-            transform.position = new Vector3(3.7f, this.transform.position.y, this.transform.position.z);
+            speed = 1f;
+            transform.Translate(Vector2.up * speed * Time.deltaTime);
         }
+        //rb.velocity = new Vector2(0f, speed * facing);
 
-        /*if (stateTick <= 0)
-        {
-            SetIsResting(!isResting);
-        }
-        else
-        {
-            stateTick -= Time.deltaTime;
+        UpdateGroundChecks();
 
-            if (!isResting)
-            {
-                if (isWallInFront || !isGroundInFront)
-                {
-                    if (facing == 1f)
-                        SetIsFacingRight(false);
-                    else SetIsFacingRight(true);
-                }
-
-                rb.velocity = new Vector2(speed * facing, 0f);
-            }
-        }*/
+        TurnTimer();
     }
 
     public void TakeStompDamage(int amount)
@@ -102,97 +93,99 @@ public class Snail : MonoBehaviour
         enemyScript.TakeShotDamage(amount);
     }
 
+
+    void TurnTimer()
+    {
+        if (hasTurned)
+        {
+            tick += Time.deltaTime;
+            if (tick >= turnTimer)
+            {
+                hasTurned = false;
+            }
+        }
+    }
+
+
     private void UpdateGroundChecks()
     {
-        isWallUpFront = Physics2D.Raycast(transform.position, Vector2.up * facing, upFrontDistanceCheck, groundCheckMask);
-        //isGroundUpFront = Physics2D.Raycast(transform.position + Vector3.up * facing * upFrontDistanceCheck, Vector2.down, groundDistanceCheck, groundCheckMask);
-    }
+        RaycastHit2D onGroundRay;
+        RaycastHit2D infrontWallRay;
 
-    private void SetIsFacingUp(bool newIsFacingUp)
-    {
-        if (newIsFacingUp)
-        {
-            facing = 1f;
-            spriteRenderer.flipY = false;
-        }
-        else
-        {
-            facing = -1f;
-            spriteRenderer.flipY = true;
-        }
-    }
 
-    private void AttachWall()
-    {
-        if (this.transform.position.x < 0)
+        onGroundRay = Physics2D.Raycast(transform.position, transform.TransformDirection(direction), groundDistanceCheck, groundCheckMask);
+
+        infrontWallRay = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.up), upFrontDistanceCheck, groundCheckMask);
+
+        if (!onGroundRay && !hasTurned)
         {
-            rb.AddForce(Vector3.left * force, ForceMode2D.Impulse);
+           
+            this.transform.eulerAngles += new Vector3(180, 0, 0);
+            tick = 0f;
+            hasTurned = true;
         }
-        else if (this.transform.position.x > 0)
+        if (infrontWallRay && !hasTurned)
         {
-            rb.AddForce(Vector3.right * force, ForceMode2D.Impulse);
+           
+            this.transform.eulerAngles += new Vector3(180, 0, 0);
+            tick = 0f;
+            hasTurned = true;
         }
     }
 
-    private void AttackWallTimer()
-    {
-        timer++;
-        if(timer >= 7)
-        {
-            AttachWall();
-            timer = 0;
-        }
-    }
+    //private void SetIsFacingUp(bool newIsFacingUp)
+    //{
+    //    if (newIsFacingUp)
+    //    {
+    //        facing = 1f;
+    //        spriteRenderer.flipY = false;
+    //    }
+    //    else
+    //    {
+    //        facing = -1f;
+    //        spriteRenderer.flipY = true;
+    //    }
+    //}
+
+    //private void AttachWall()
+    //{
+    //    if (this.transform.position.x < 0)
+    //    {
+    //        rb.AddForce(Vector3.left * force, ForceMode2D.Impulse);
+    //    }
+    //    else if (this.transform.position.x > 0)
+    //    {
+    //        rb.AddForce(Vector3.right * force, ForceMode2D.Impulse);
+    //    }
+    //}
+
+    //private void LeaveWall()
+    //{
+    //    if (this.transform.position.x < 0)
+    //    {
+
+    //        rb.AddForce(Vector3.right * force, ForceMode2D.Impulse);
+    //    }
+    //    else if (this.transform.position.x > 0)
+    //    {
+    //        rb.AddForce(Vector3.left * force, ForceMode2D.Impulse);
+    //    }
+    //}
+
+    //public void SetFace()
+    //{
+    //    if (facing == 1f)
+    //    {
+    //        SetIsFacingUp(false);
+    //    }
+    //    else if (facing == -1f)
+    //    {
+    //        SetIsFacingUp(true);
+    //    }
+    //}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Ground")
-        {
-            if (collision.transform.position.y > this.transform.position.y && collision.transform.position.x >= this.transform.position.x)
-            {
-                if (facing == 1f)
-                {
-                    SetIsFacingUp(false);
-                }
-                else if (facing == -1f)
-                {
-                    SetIsFacingUp(true);
-                }
-            }
-            else if (collision.transform.position.y < this.transform.position.y && collision.transform.position.x >= this.transform.position.x)
-            {
-                if (facing == 1f)
-                {
-                    SetIsFacingUp(true);
-                }
-                else if (facing == -1f)
-                {
-                    SetIsFacingUp(false);
-                }
-            }
-
-            if (collision.transform.position.y > this.transform.position.y && collision.transform.position.x <= this.transform.position.x)
-            {
-                if (facing == 1f)
-                {
-                    SetIsFacingUp(false);
-                }
-                else if (facing == -1f)
-                {
-                    SetIsFacingUp(true);
-                }
-            }
-            else if (collision.transform.position.y < this.transform.position.y && collision.transform.position.x <= this.transform.position.x)
-            {
-                if (facing == 1f)
-                {
-                    SetIsFacingUp(true);
-                }
-                else if (facing == -1f)
-                {
-                    SetIsFacingUp(false);
-                }
-            }
-        }
+        
     }
 }

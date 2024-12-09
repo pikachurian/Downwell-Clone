@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 public class Gem : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Gem : MonoBehaviour
 
     private GameObject playerObject = null;
 
+    public TimePause timePause;
+
     private void Start()
     {
         //rb.velocity = new Vector3(2f, 1f, 0f) * speed;
@@ -21,16 +24,24 @@ public class Gem : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerObject == null)
+        if (timePause.timeStop)
         {
-            playerObject = GameObject.FindGameObjectWithTag("Player");
-        }else
+            rb.velocity = new Vector2(0, 0);
+        }
+        else if (!timePause.timeStop)
         {
-            //Follow player
-            if (Vector3.Distance(playerObject.transform.position, transform.position) <= followPlayerRadius)
+            if (playerObject == null)
             {
-                Vector3 dir = playerObject.transform.position - transform.position;
-                rb.AddForce(followPlayerSpeed * dir, ForceMode2D.Impulse);
+                playerObject = GameObject.FindGameObjectWithTag("Player");
+            }
+            else
+            {
+                //Follow player
+                if (Vector3.Distance(playerObject.transform.position, transform.position) <= followPlayerRadius)
+                {
+                    Vector3 dir = playerObject.transform.position - transform.position;
+                    rb.AddForce(followPlayerSpeed * dir, ForceMode2D.Impulse);
+                }
             }
         }
         /*if (rb.velocity.magnitude > speed)

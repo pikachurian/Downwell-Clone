@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UIElements.Experimental;
 
 public class badBubble : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class badBubble : MonoBehaviour
     public Vector3 target;
     public bool firstBoucefinished = false;
     public bool secondBoucestarted = false;
+
+    public TimePause timePause;
     private enum State { 
         awake,
         chase,
@@ -36,8 +39,6 @@ public class badBubble : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
         DOTween.SetTweensCapacity(500, 50);
         speed = initalSpeed;
         player = GameObject.FindGameObjectWithTag("Player").gameObject;
@@ -48,20 +49,26 @@ public class badBubble : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        switch (state)
+        if (timePause.timeStop)
         {
-            case State.awake:
-                Awaking();
-                break;
-            case State.chase:
-                Chasing();
-                break;
-            case State.bounce:
-                Bounce();
-                break;
-            case State.death:
-                break;
+            rb.velocity = new Vector2(0, 0);
+        }
+        else if (!timePause.timeStop)
+        {
+            switch (state)
+            {
+                case State.awake:
+                    Awaking();
+                    break;
+                case State.chase:
+                    Chasing();
+                    break;
+                case State.bounce:
+                    Bounce();
+                    break;
+                case State.death:
+                    break;
+            }
         }
     }
 

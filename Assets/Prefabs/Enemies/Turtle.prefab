@@ -152,6 +152,8 @@ MonoBehaviour:
   groundCheckMask:
     serializedVersion: 2
     m_Bits: 64
+  timePause: {fileID: 7364760841685859551, guid: a475f56fe0352de478cd72fcdd4aa9a3, type: 3}
+  v: {x: 0, y: 0}
 --- !u!50 &2558254593381371898
 Rigidbody2D:
   serializedVersion: 4

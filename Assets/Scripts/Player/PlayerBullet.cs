@@ -56,10 +56,29 @@ public class PlayerBullet : MonoBehaviour
                     case "snail":
                         collision.gameObject.GetComponent<Snail>().TakeShotDamage(damage);
                         break;
+                    case "crawler":
+                        collision.gameObject.GetComponent<Crawler>().TakeShotDamage(damage);
+                        break;
+                   
                 }
                 animator.SetTrigger("HitGround");
                 break;
         }
+
+        if (collision.gameObject.tag == "gempile")
+        {
+            collision.gameObject.GetComponent<Gempile>().TakeShotDamage(damage);
+            collision.gameObject.GetComponent<Gempile>().SpwanGem();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "obstacle")
+        {
+            collision.gameObject.GetComponent<Obstacle>().TakeShotDamage(damage);
+        }
+       
     }
 
     public void Despawn()
