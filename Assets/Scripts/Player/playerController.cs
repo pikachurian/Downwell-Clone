@@ -73,6 +73,8 @@ public class playerController : MonoBehaviour
     //Camera
     private CameraMovement cam;
 
+    //Game Over
+    public GameOverScreen gameOverScreen;
 
 
     // Start is called before the first frame update
@@ -389,8 +391,12 @@ public class playerController : MonoBehaviour
 
     private void Die()
     {
-        //Reload scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //Enable Game Over Screen.
+        gameOverScreen.Setup(gemsCollected, 0);
+
+        //Disable this player.
+        this.enabled = false;
+        gameObject.SetActive(false);
     }
 
     private void OnDrawGizmosSelected()
