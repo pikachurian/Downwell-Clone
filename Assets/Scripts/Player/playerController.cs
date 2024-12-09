@@ -69,6 +69,12 @@ public class playerController : MonoBehaviour
     public int gemsCollected;
 
     private bool isHigh = false;
+
+    //Combo
+    public ComboUI comboUI;
+    public int currentCombo = 0;
+    public int highestCombo = 0;
+    public int comboShowUIThreshold = 5;
     
     //Camera
     private CameraMovement cam;
@@ -128,6 +134,8 @@ public class playerController : MonoBehaviour
         if (isGround)
         {
             canShoot = false;
+
+            EndCombo();
 
             if (ammo_num < ammo_max)
             {
@@ -432,11 +440,37 @@ public class playerController : MonoBehaviour
     private void Die()
     {
         //Enable Game Over Screen.
-        gameOverScreen.Setup(gemsCollected, 0);
+        gameOverScreen.Setup(gemsCollected, highestCombo);
 
         //Disable this player.
         this.enabled = false;
         gameObject.SetActive(false);
+    }
+
+    public void AddToCombo(int amount)
+    {
+        currentCombo += amount;
+
+        if (currentCombo >= comboShowUIThreshold)
+        {
+            if (comboUI.gameObject.activeInHierarchy == false)
+                comboUI.Show(currentCombo);
+            //print("COMBO " + currentCombo.ToString());
+         
+            comboUI.SetValue(currentCombo);
+        }
+
+        if (currentCombo > highestCombo)
+            highestCombo = currentCombo;
+
+        //print("COMBO " + currentCombo.ToString());
+    }
+
+    private void EndCombo()
+    {
+        currentCombo = 0;
+
+        comboUI.Hide();
     }
 
     private void OnDrawGizmosSelected()

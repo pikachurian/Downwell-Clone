@@ -22,10 +22,13 @@ public class Enemy : MonoBehaviour
     private float despawnTick = 0f;
     private bool isDead = false;
 
+    private playerController player;
+
     private void Start()
     {
         shotHP = shotHPMax;
         stompedHP = stompedHPMax;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
     }
 
     private void Update()
@@ -64,6 +67,9 @@ public class Enemy : MonoBehaviour
 
         //Spawn Gems.
         SpwanGem();
+
+        //Add to combo.
+        player.AddToCombo(1);
     }
 
     void SpwanGem()
