@@ -329,7 +329,7 @@ public class playerController : MonoBehaviour
                         break;
                 }
 
-                if (collision.gameObject.tag != "snail" && collision.gameObject.tag != "crawler")
+                if (collision.gameObject.tag != "snail" && collision.gameObject.tag != "crawler" && collision.gameObject.tag != "gempile")
                 {
                     canShoot = true;
                     SetAmmo(ammo_max);

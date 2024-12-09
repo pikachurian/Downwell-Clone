@@ -63,6 +63,11 @@ public class Enemy : MonoBehaviour
         isDead = true;
 
         //Spawn Gems.
+        SpwanGem();
+    }
+
+    void SpwanGem()
+    {
         for (int i = 0; i < gemsToSpawn; i++)
         {
             GameObject gemInst = Instantiate(gemPrefab);
