@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5841128694705582979}
   - component: {fileID: 9135460902141139722}
   - component: {fileID: 4966141022535417223}
-  - component: {fileID: 241414536106686871}
+  - component: {fileID: 2992287076555198786}
   m_Layer: 9
   m_Name: Snail
   m_TagString: snail
@@ -181,7 +181,7 @@ PolygonCollider2D:
       - {x: 0.5, y: -0.5}
       - {x: 0.5, y: 0.5}
   m_UseDelaunayMesh: 0
---- !u!50 &241414536106686871
+--- !u!50 &2992287076555198786
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -195,7 +195,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:

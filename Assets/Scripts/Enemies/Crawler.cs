@@ -69,7 +69,7 @@ public class Crawler : MonoBehaviour
 
     public void TakeStompDamage(int amount)
     {
-        enemyScript.TakeStompDamage(amount);
+        
     }
 
     public void TakeShotDamage(int amount)
@@ -86,7 +86,7 @@ public class Crawler : MonoBehaviour
         
         onGroundRay = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), groundDistanceCheck, groundCheckMask);
         
-        infrontWallRay = Physics2D.Raycast(transform.position, direction, inFrontDistanceCheck, groundCheckMask);
+        infrontWallRay = Physics2D.Raycast(transform.position, transform.TransformDirection(direction), inFrontDistanceCheck, groundCheckMask);
 
         if (!onGroundRay && !hasTurned)
         {
