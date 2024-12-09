@@ -146,6 +146,11 @@ public class playerController : MonoBehaviour
             {
                 audioSource.PlayOneShot(landSound);
             }
+        }else
+        {
+            //Set can shoot
+            if (myRigidbody.velocity.y < 0)
+                canShoot = true;
         }
 
         myAnim.SetFloat("Vertical Speed", myRigidbody.velocity.y);
