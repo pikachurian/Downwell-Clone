@@ -6342,7 +6342,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1359660451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7401,6 +7401,10 @@ PrefabInstance:
       propertyPath: gameOverScreen
       value: 
       objectReference: {fileID: 1320088083}
+    - target: {fileID: 1789189938324563575, guid: b8bd26387d9d6274b989099f7d7f64da, type: 3}
+      propertyPath: stompTurtleYOffset
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 4249315713480475048, guid: b8bd26387d9d6274b989099f7d7f64da, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.8
@@ -18144,11 +18148,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1216573585088149009, guid: e0929904494d4ee4086b2f8c4eaa0b8b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1216573585088149009, guid: e0929904494d4ee4086b2f8c4eaa0b8b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3830981730196091273, guid: e0929904494d4ee4086b2f8c4eaa0b8b, type: 3}
       propertyPath: m_Pivot.x

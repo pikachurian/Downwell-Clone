@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 //using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.SceneManagement;
+using static Unity.VisualScripting.Member;
 
 public class playerController : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class playerController : MonoBehaviour
 
     //Stomping
     public float stompBoost = 5f;
+    public float stompTurtleYOffset = 0.25f;
 
     //Enemy Interactions
     //public bool isKnockbacked = false;
@@ -336,7 +338,24 @@ public class playerController : MonoBehaviour
                 switch(collision.gameObject.tag)
                 {
                     case "Turtle":
-                        collision.gameObject.GetComponent<Turtle>().TakeStompDamage(1);
+                        if (collision.transform.position.y + stompTurtleYOffset < transform.position.y)
+                        {
+                            collision.gameObject.GetComponent<Turtle>().TakeStompDamage(1);
+
+                            canShoot = true;
+                            SetAmmo(ammo_max);
+                            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, stompBoost);
+                        }
+                        else
+                        {
+                            Vector2 knockbackDirection = (transform.position - collision.transform.position).normalized;
+                            Vector2 force = knockbackDirection * knockbackForcement;
+
+                            myRigidbody.AddForce(force, ForceMode2D.Impulse);
+                            immune = true;
+                            TakeDamage(1);
+                        }
+                       
                         break;
 
                     case "Bad_Bubble":
@@ -353,7 +372,7 @@ public class playerController : MonoBehaviour
                         break;
                 }
 
-                if (collision.gameObject.tag != "snail" && collision.gameObject.tag != "crawler" && collision.gameObject.tag != "gempile")
+                if (collision.gameObject.tag != "snail" && collision.gameObject.tag != "crawler" && collision.gameObject.tag != "gempile" && collision.gameObject.tag != "Turtle")
                 {
                     canShoot = true;
                     SetAmmo(ammo_max);
