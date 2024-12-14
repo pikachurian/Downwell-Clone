@@ -8211,6 +8211,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4329681853481283023, guid: 423466f27fa5bda498715dc9046008fe, type: 3}
+      propertyPath: maxSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329681853481283023, guid: 423466f27fa5bda498715dc9046008fe, type: 3}
       propertyPath: timePause
       value: 
       objectReference: {fileID: 1908945092}
