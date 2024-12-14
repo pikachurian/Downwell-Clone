@@ -7,10 +7,14 @@ public class TimePause : MonoBehaviour
     //public GameObject player;
     public bool timeStop;
 
+    public TimeStopManager timeStopManager;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-
+        timeStopManager = GameObject.FindGameObjectWithTag("TimeStopManager").GetComponent<TimeStopManager>();
     }
 
     // Update is called once per frame
@@ -31,7 +35,16 @@ public class TimePause : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            timeStop = true;
+            /*timeStop = true;
+
+            //Freeze gems.
+            GameObject[] gems = GameObject.FindGameObjectsWithTag("Gem");
+            for (int i = 0; i < gems.Length; i ++)
+            {
+                Rigidbody2D rb = gems[i].GetComponent<Rigidbody2D>();
+                rb.simulated = false;
+            }*/
+            timeStopManager.PauseTime();
         }
     }
 
@@ -39,7 +52,17 @@ public class TimePause : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            timeStop = false;
+            /*timeStop = false;
+
+            //Freeze gems.
+            GameObject[] gems = GameObject.FindGameObjectsWithTag("Gem");
+            for (int i = 0; i < gems.Length; i++)
+            {
+                Rigidbody2D rb = gems[i].GetComponent<Rigidbody2D>();
+                rb.simulated = true;
+            }*/
+
+            timeStopManager.ResumeTime();
         }
     }
 

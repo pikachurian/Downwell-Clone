@@ -27,7 +27,7 @@ public class Worm : MonoBehaviour
     private bool isWallInFront = false;
     private bool isGroundInFront = false;
 
-    public TimePause timePause;
+    public TimeStopManager timeStopManager;
 
     // Start is called before the first frame update
     void Start()
@@ -39,16 +39,18 @@ public class Worm : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         SetIsFacingRight((Random.value < 0.5));
+
+        timeStopManager = GameObject.FindGameObjectWithTag("TimeStopManager").GetComponent<TimeStopManager>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (timePause.timeStop)
+        if (timeStopManager.GetIsTimePaused())
         {
             rb.velocity = new Vector2(0, 0);
         }
-        else if (!timePause.timeStop)
+        else if (!timeStopManager.GetIsTimePaused())
         {
             UpdateGroundChecks();
 

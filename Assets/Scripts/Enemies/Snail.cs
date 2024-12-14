@@ -29,7 +29,7 @@ public class Snail : MonoBehaviour
     public bool hasTurned;
     public float tick;
     public float turnTimer;
-    public TimePause timePause;
+    public TimeStopManager timeStopManager;
     public float awakeDistance;
     public GameObject player;
 
@@ -44,6 +44,8 @@ public class Snail : MonoBehaviour
         DirectionDetection();
 
         player = GameObject.FindGameObjectWithTag("Player").gameObject;
+
+        timeStopManager = GameObject.FindGameObjectWithTag("TimeStopManager").GetComponent<TimeStopManager>();
 
 
     }
@@ -67,11 +69,11 @@ public class Snail : MonoBehaviour
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
-        if (timePause.timeStop)
+        if (timeStopManager.GetIsTimePaused())
         {
             speed = 0F;
         }
-        else if (!timePause.timeStop && distanceToPlayer <= awakeDistance)
+        else if (!timeStopManager.GetIsTimePaused() && distanceToPlayer <= awakeDistance)
         {
             speed = 1f;
             transform.Translate(Vector2.up * speed * Time.deltaTime);

@@ -80,6 +80,10 @@ public class Enemy : MonoBehaviour
             float gemDir = 1f;
             if (Random.value < 0.5f)
                 gemDir = -1f;
+            if (GetComponent<Gempile>() != null)
+            {
+                gemInst.GetComponent<Gem>().affectedByTimePause = false;
+            }
             gemInst.GetComponent<Rigidbody2D>().velocity = new Vector3(gemDir * 2f, 1f, 0f) * gemSpawnSpeed;
             gemInst.transform.position = transform.position + gemSpawnOffset;
         }

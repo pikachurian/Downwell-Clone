@@ -23,7 +23,7 @@ public class Crawler : MonoBehaviour
     public float tick = 0f;
     public bool hasTurned = false;
 
-    public TimePause timePause;
+    public TimeStopManager timeStopManager;
 
     public float awakeDistance;
     public GameObject player;
@@ -37,6 +37,8 @@ public class Crawler : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         DirectionDetection();
         player = GameObject.FindGameObjectWithTag("Player").gameObject;
+
+        timeStopManager = GameObject.FindGameObjectWithTag("TimeStopManager").GetComponent<TimeStopManager>();
     }
 
     // Update is called once per frame
@@ -44,11 +46,11 @@ public class Crawler : MonoBehaviour
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
-        if (timePause.timeStop)
+        if (timeStopManager.GetIsTimePaused())
         {
             speed = 0F;
         }
-        else if (!timePause.timeStop && distanceToPlayer <= awakeDistance)
+        else if (!timeStopManager.GetIsTimePaused() && distanceToPlayer <= awakeDistance)
         {
             speed = 1f;
             transform.Translate(direction * speed * Time.deltaTime);
