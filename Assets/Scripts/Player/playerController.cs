@@ -239,7 +239,10 @@ public class playerController : MonoBehaviour
                 if (shootRateTick <= 0f)
                 {
                     FireBullet();
-                    cam.CameraShake(shootShakeTime, shootShakeStrength);
+                    if (ammo_num > 0)
+                    {
+                        cam.CameraShake(shootShakeTime, shootShakeStrength);
+                    }
                     shootRateTick = shootRateTime;
                     bulletCasingEmitter.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                     bulletCasingEmitter.Play(true);

@@ -145,7 +145,7 @@ MonoBehaviour:
   target: {x: 0, y: 0, z: 0}
   firstBoucefinished: 0
   secondBoucestarted: 0
-  timePause: {fileID: 7364760841685859551, guid: a475f56fe0352de478cd72fcdd4aa9a3, type: 3}
+  timeStopManager: {fileID: 0}
   enemy: {fileID: 6953131330720692119}
   shotKnockbackValue: 0.5
 --- !u!114 &6953131330720692119

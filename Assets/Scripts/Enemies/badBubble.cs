@@ -36,6 +36,8 @@ public class badBubble : MonoBehaviour
     public Enemy enemy;
     public float shotKnockbackValue = 2f;
 
+    public Vector3 lastPosition;
+
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +74,7 @@ public class badBubble : MonoBehaviour
                 case State.death:
                     break;
             }
+            lastPosition = transform.position;
         }
     }
 
@@ -93,14 +96,17 @@ public class badBubble : MonoBehaviour
         speed = Mathf.Min(speed + acceleration * Time.deltaTime, maxSpeed);
         transform.position += (Vector3)(direction * speed * Time.deltaTime);
         
+        //rb.AddForce(direction * speed, ForceMode2D.Force);
         
     }
     public void Bounce()
     {
         if (Vector3.Distance(this.transform.position, target)> 0.05f && !firstBoucefinished)
         {
-            
+
             this.transform.position = Vector3.MoveTowards(this.transform.position, target, speed * Time.deltaTime);
+            //Vector3 dir = target - transform.position;
+            //rb.AddForce(dir * speed, ForceMode2D.Force);
 
         }
         else if (Vector3.Distance(this.transform.position, target) < 0.05f)
@@ -134,8 +140,9 @@ public class badBubble : MonoBehaviour
             }
         }
 
-
-
+        //transform.position = lastPosition;
+        //transform.position = new Vector3(transform.position.x - rb.velocity.x, transform.position.y - rb.velocity.y, transform.position.z);
+        //transform.position.y -= rb.velocity.y;
 
 
     }
@@ -197,8 +204,9 @@ public class badBubble : MonoBehaviour
             print(state);
             print(target);
 
-           
 
+            //transform.position = lastPosition;
+            //transform.position = new Vector3(transform.position.x - Mathf.Sign(rb.velocity.x) * 0.25f, transform.position.y - Mathf.Sign(rb.velocity.y) * 0.25f, transform.position.z);
         }
 
 
