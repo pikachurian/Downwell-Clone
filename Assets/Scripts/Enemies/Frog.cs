@@ -24,7 +24,7 @@ public class Frog : MonoBehaviour
     private bool isWallInFront = false;
     private bool isGroundInFront = false;
 
-    public TimePause timePause;
+    public TimeStopManager timeStopManager;
 
     public GameObject player;
     private BoxCollider2D frogFeet;
@@ -46,6 +46,8 @@ public class Frog : MonoBehaviour
         timeCount = timer;
         player = GameObject.FindGameObjectWithTag("Player").gameObject;
         anim = GetComponent<Animator>();
+
+        timeStopManager = GameObject.FindGameObjectWithTag("TimeStopManager").GetComponent<TimeStopManager>();
     }
 
     // Update is called once per frame
@@ -53,11 +55,11 @@ public class Frog : MonoBehaviour
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
-        if (timePause.timeStop)
+        if (timeStopManager.GetIsTimePaused())
         {
             rb.velocity = new Vector2(0, 0);
         }
-        else if (!timePause.timeStop && distanceToPlayer <= awakeDistance)
+        else if (!timeStopManager.GetIsTimePaused() && distanceToPlayer <= awakeDistance)
         {
             CheckGrounded();
             if (isGround)

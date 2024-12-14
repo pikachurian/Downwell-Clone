@@ -17,6 +17,8 @@ public class Gem : MonoBehaviour
 
     public TimePause timePause;
 
+    public bool affectedByTimePause = true;
+
     private void Start()
     {
         //rb.velocity = new Vector3(2f, 1f, 0f) * speed;

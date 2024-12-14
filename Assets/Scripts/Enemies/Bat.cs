@@ -21,7 +21,7 @@ public class Bat : MonoBehaviour
     private Rigidbody2D rb;
     public float shotKnockbackValue = 2f;
 
-    public TimePause timePause;
+    public TimeStopManager timeStopManager;
 
     // Start is called before the first frame update
     void Start()
@@ -29,16 +29,18 @@ public class Bat : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").gameObject;
         enemy = GetComponent<Enemy>();
         rb = GetComponent<Rigidbody2D>();
+
+        timeStopManager = GameObject.FindGameObjectWithTag("TimeStopManager").GetComponent<TimeStopManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timePause.timeStop)
+        if (timeStopManager.GetIsTimePaused())
         {
             rb.velocity = new Vector2(0, 0);
         }
-        else if (!timePause.timeStop)
+        else if (!timeStopManager.GetIsTimePaused())
         {
             switch (currentState)
             {

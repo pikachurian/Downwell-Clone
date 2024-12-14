@@ -24,7 +24,7 @@ public class badBubble : MonoBehaviour
     public bool firstBoucefinished = false;
     public bool secondBoucestarted = false;
 
-    public TimePause timePause;
+    public TimeStopManager timeStopManager;
 
     private enum State { 
         awake,
@@ -45,16 +45,18 @@ public class badBubble : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").gameObject;
         //rigidbody = this.rigidbody;
         rb = this.GetComponent<Rigidbody2D>();
+
+        timeStopManager = GameObject.FindGameObjectWithTag("TimeStopManager").GetComponent<TimeStopManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timePause.timeStop)
+        if (timeStopManager.GetIsTimePaused())
         {
             rb.velocity = new Vector2(0, 0);
         }
-        else if (!timePause.timeStop)
+        else if (!timeStopManager.GetIsTimePaused())
         {
             switch (state)
             {

@@ -45,8 +45,10 @@ public class Gempile : MonoBehaviour
             float gemDir = 1f;
             if (Random.value < 0.5f)
                 gemDir = -1f;
+            gemInst.GetComponent<Gem>().affectedByTimePause = false;
             gemInst.GetComponent<Rigidbody2D>().velocity = new Vector3(gemDir * 2f, 1f, 0f) * 8;
             gemInst.transform.position = transform.position + Vector3.zero;
+            gemInst.GetComponent<Rigidbody2D>().simulated = true;
         }
     }
 }

@@ -17,6 +17,8 @@ TagManager:
   - crawler
   - obstacle
   - gempile
+  - Gem
+  - TimeStopManager
   layers:
   - Default
   - TransparentFX
