@@ -17,6 +17,7 @@ public class playerController : MonoBehaviour
     private Animator myAnim;
     private Rigidbody2D myRigidbody;
     private BoxCollider2D myFeet;
+    private CapsuleCollider2D bodyCollider;
     private bool isGround = false;
 
     //Shooting
@@ -90,6 +91,7 @@ public class playerController : MonoBehaviour
         myAnim = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         myFeet = GetComponent<BoxCollider2D>();
+        bodyCollider = GetComponent<CapsuleCollider2D>();
 
         hp = hpMax;
         healthBar.SetMaxHealth(hpMax);
@@ -308,11 +310,15 @@ public class playerController : MonoBehaviour
         Vector2 knockbackDirection_1 = (transform.position - collision.transform.position).normalized;
         Vector2 force_1 = knockbackDirection_1 * knockbackForcement;
 
-        if (collision.gameObject.tag == "snail" || collision.gameObject.tag == "crawler" && !immune)
+        if (collision.gameObject.tag == "snail" || collision.gameObject.tag == "crawler")
         {
-            myRigidbody.AddForce(force_1, ForceMode2D.Impulse);
-            immune = true; 
-            TakeDamage(1);
+            if (!immune)
+            {
+                myRigidbody.AddForce(force_1/2, ForceMode2D.Impulse);
+                immune = true;
+                TakeDamage(1);
+            }
+            
         }
 
         //Stomping
@@ -402,6 +408,7 @@ public class playerController : MonoBehaviour
                 }
 
                 //Lose hp
+                immune = true;
                 TakeDamage(1);
                
             }
@@ -425,10 +432,14 @@ public class playerController : MonoBehaviour
         if (immune)
         {
             immue_timer += Time.deltaTime;
+            Physics2D.IgnoreLayerCollision(3, 9, true);
+
+
         }
         if (immue_timer >= immune_time)
         {
             immune = false;
+            Physics2D.IgnoreLayerCollision(3, 9, false);
             immue_timer = 0;
         }
 
