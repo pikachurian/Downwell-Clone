@@ -20,6 +20,7 @@ public class Bat : MonoBehaviour
     public Enemy enemy;
     private Rigidbody2D rb;
     public float shotKnockbackValue = 2f;
+    private Animator anim;
 
     public TimeStopManager timeStopManager;
 
@@ -31,6 +32,7 @@ public class Bat : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         timeStopManager = GameObject.FindGameObjectWithTag("TimeStopManager").GetComponent<TimeStopManager>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -59,6 +61,7 @@ public class Bat : MonoBehaviour
 
             if (player.transform.position.y <= this.transform.position.y)
             {
+                anim.SetTrigger("Activate");
                 currentState = State.chase;
             }
         }
